@@ -1,4 +1,4 @@
-package modulo2.orientacao;
+package modulo2.orientacao.manytomany;
 
 public class TesteAlunoCurso {
 	public static void main(String[] args) {

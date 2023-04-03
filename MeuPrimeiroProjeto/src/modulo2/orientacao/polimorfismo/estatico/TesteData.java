@@ -1,4 +1,4 @@
-package modulo2.orientacao;
+package modulo2.orientacao.polimorfismo.estatico;
 
 public class TesteData {
 	public static void main(String[] args) {

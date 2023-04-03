@@ -1,4 +1,4 @@
-package modulo2.orientacao;
+package modulo2.orientacao.manytomany;
 
 import java.util.ArrayList;
 import java.util.List;

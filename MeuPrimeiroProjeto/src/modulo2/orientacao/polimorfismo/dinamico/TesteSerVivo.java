@@ -1,4 +1,4 @@
-package modulo2.orientacao;
+package modulo2.orientacao.polimorfismo.dinamico;
 
 public class TesteSerVivo {
 	public static void main(String[] args) {

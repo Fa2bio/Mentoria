@@ -1,4 +1,4 @@
-package modulo2.orientacao;
+package modulo2.orientacao.abstracao;
 
 public class TesteForma {
 	public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package modulo2.orientacao;
+package modulo2.orientacao.onetoone;
 
 import java.util.ArrayList;
 import java.util.List;

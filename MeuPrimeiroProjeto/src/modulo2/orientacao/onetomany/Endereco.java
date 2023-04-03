@@ -1,8 +1,9 @@
-package modulo2.orientacao;
+package modulo2.orientacao.onetomany;
 
 public class Endereco {
 	String rua;
 	Pessoa pessoa;
+	
 	public Endereco(String rua) {
 		this.rua = rua;
 	}
