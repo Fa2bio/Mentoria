@@ -1,2 +1,0 @@
-INSERT INTO produto (descricao, unidade_de_medida, data_de_vencimento) VALUES ('PICANHA','KG', '10/01/2023');
-INSERT INTO produto (descricao, unidade_de_medida, data_de_vencimento) VALUES ('ALCATRA','KG', '05/02/2023');
