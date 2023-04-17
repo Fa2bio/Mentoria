@@ -31,6 +31,7 @@ public class MotorRepositoryImpl implements MotorRepository,
 
 	@Override
 	public void excluir(Motor motor) {
-		delete(motor);	
+		delete(motor);
+		getEntityManager().flush();
 	}	
 }
