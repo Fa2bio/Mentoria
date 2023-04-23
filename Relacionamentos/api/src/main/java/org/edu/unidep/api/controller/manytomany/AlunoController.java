@@ -14,6 +14,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.edu.unidep.api.dto.assembler.manytomany.AlunoInputDisassembler;
+import org.edu.unidep.api.dto.assembler.manytomany.AlunoOutAssembler;
+import org.edu.unidep.api.dto.model.manytomany.input.AlunoInputModel;
+import org.edu.unidep.api.dto.model.manytomany.output.AlunoModel;
+import org.edu.unidep.api.dto.model.manytomany.output.AlunoResumoModel;
 import org.edu.unidep.domain.model.manytomany.Aluno;
 import org.edu.unidep.domain.repository.manytomany.AlunoRepository;
 import org.edu.unidep.domain.service.manytomany.AlunoService;
@@ -27,24 +32,31 @@ public class AlunoController {
 	@Inject
 	private AlunoService alunoService;
 	
+	@Inject
+	private AlunoOutAssembler alunoOutAssembler;
+	
+	@Inject
+	private AlunoInputDisassembler alunoInputDisassembler;
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listarAlunos() {
+	public List<AlunoResumoModel> listarAlunos() {
 		List<Aluno> todosAlunos = alunoRepository.listarAlunos();
-		return Response.ok(todosAlunos).build();
+		return alunoOutAssembler.toCollectionModel(todosAlunos);
 	}
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("{id}")
-	public Response buscarAlunoPorId(@PathParam("id") Long id) {
+	public AlunoModel buscarAlunoPorId(@PathParam("id") Long id) {
 		Aluno aluno = alunoService.acharOuFalhar(id);
-		return Response.ok(aluno).build();
+		return alunoOutAssembler.toModel(aluno);
 	}
 	
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response salvar(@RequestBody Aluno aluno) {
+    public Response salvar(@RequestBody AlunoInputModel alunoInput) {
+    	Aluno aluno = alunoInputDisassembler.toDomainObject(alunoInput);
     	alunoService.registrar(aluno);
     	return Response.status(Status.CREATED).build();
     }
