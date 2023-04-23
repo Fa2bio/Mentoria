@@ -1,6 +1,8 @@
 package org.edu.unidep.domain.exception.onetoone;
 
-public class MotorNaoEncontradoException extends RuntimeException{
+import org.edu.unidep.domain.exception.EntidadeNaoEncontradaException;
+
+public class MotorNaoEncontradoException extends EntidadeNaoEncontradaException{
 
 	private static final long serialVersionUID = 1L;
 	

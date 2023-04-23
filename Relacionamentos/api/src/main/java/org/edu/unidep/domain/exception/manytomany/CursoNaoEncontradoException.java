@@ -1,6 +1,8 @@
 package org.edu.unidep.domain.exception.manytomany;
 
-public class CursoNaoEncontradoException extends RuntimeException{
+import org.edu.unidep.domain.exception.EntidadeNaoEncontradaException;
+
+public class CursoNaoEncontradoException extends EntidadeNaoEncontradaException{
 
 	private static final long serialVersionUID = 1L;
 	

@@ -1,6 +1,8 @@
 package org.edu.unidep.domain.exception.onetomany;
 
-public class EstadoNaoEncontradoException extends RuntimeException{
+import org.edu.unidep.domain.exception.EntidadeNaoEncontradaException;
+
+public class EstadoNaoEncontradoException extends EntidadeNaoEncontradaException{
 
 	private static final long serialVersionUID = 1L;
 	

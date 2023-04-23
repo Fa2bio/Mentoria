@@ -1,6 +1,8 @@
 package org.edu.unidep.domain.exception.onetoone;
 
-public class MotorEmUsoException extends RuntimeException{
+import org.edu.unidep.domain.exception.EntidadeEmUsoException;
+
+public class MotorEmUsoException extends EntidadeEmUsoException{
 
 	private static final long serialVersionUID = 1L;
 	
