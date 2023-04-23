@@ -3,6 +3,7 @@ package org.edu.unidep.domain.model.manytomany;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,17 +26,17 @@ public class Curso {
     @Column(name = "nome", length = 100)
 	private String nome;
 
-    @ManyToMany(mappedBy = "cursos")
+    @ManyToMany(mappedBy = "cursos", cascade = CascadeType.ALL)
     private List<Aluno> alunos = new ArrayList<>();
     
     public void addAluno(Aluno aluno) {
     	this.alunos.add(aluno);
-    	aluno.addCursoLista(this);
+    	aluno.getCursos().add(this);
     }
     
     public void delAluno(Aluno aluno) {
     	this.alunos.add(aluno);
-    	aluno.delCursoLista(this);
+    	aluno.getCursos().remove(this);
     }
 
 	public Long getId() {
@@ -54,19 +55,12 @@ public class Curso {
 		this.nome = nome;
 	}
 
-//	public List<Aluno> getAlunos() {
-//		return alunos;
-//	}
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
 
 	public void setAlunos(List<Aluno> alunos) {
 		this.alunos = alunos;
 	}
-    
-	public void addAlunoLista(Aluno aluno) {
-		this.alunos.add(aluno);
-	}
-    
-	public void delAlunoLista(Aluno aluno) {
-		this.alunos.remove(aluno);
-	}
+ 
 }

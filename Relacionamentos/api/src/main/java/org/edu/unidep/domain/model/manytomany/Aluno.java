@@ -3,6 +3,7 @@ package org.edu.unidep.domain.model.manytomany;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,19 +28,19 @@ public class Aluno {
     @Column(name = "nome", length = 100)
 	private String nome;
     
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "aluno_curso", joinColumns = @JoinColumn(name = "aluno_id"),
     		inverseJoinColumns = @JoinColumn(name = "curso_id"))
     private List<Curso> cursos = new ArrayList<>();
     
     public void addCurso(Curso curso) {
     	this.cursos.add(curso);
-    	curso.addAlunoLista(this);
+    	curso.getAlunos().add(this);
     }
     
     public void delCurso(Curso curso) {
     	this.cursos.remove(curso);
-    	curso.delAlunoLista(this);
+    	curso.getAlunos().remove(this);
     }
     
 	public Long getId() {
@@ -65,12 +66,5 @@ public class Aluno {
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
-    
-	public void addCursoLista(Curso curso) {
-		this.cursos.add(curso);
-	}
-	
-	public void delCursoLista(Curso curso) {
-		this.cursos.remove(curso);
-	}
+
 }
