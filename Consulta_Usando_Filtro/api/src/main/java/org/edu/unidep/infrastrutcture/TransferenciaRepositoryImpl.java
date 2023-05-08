@@ -21,6 +21,7 @@ public class TransferenciaRepositoryImpl implements TransferenciaRepository, Pan
 	
 	@Override
 	public List<Transferencia> getWithFilter(TransferenciaFilter filter) {
+		
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
 		
 		CriteriaQuery<Transferencia> query = criteriaBuilder.createQuery(Transferencia.class);
