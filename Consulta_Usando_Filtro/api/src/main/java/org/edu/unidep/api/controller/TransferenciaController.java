@@ -16,12 +16,14 @@ import org.edu.unidep.domain.service.TransferenciaService;
 @Path("/transferencias")
 public class TransferenciaController {
 
+	/*http://localhost:8080/transferencias?dataCriacaoInicio="2018-01-01T12:00:00Z"&dataCriacaoFim="2020-01-01T12:00:00Z"*/
+	
 	@Inject
 	private TransferenciaService transferenciaService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TransferenciaModel> todasTransferencias(@RequestBody TransferenciaFilter filter){
-		return transferenciaService.transferenciasUsandoFiltro(filter);
+		return transferenciaService.transferenciaUsandoFiltro(filter);
 	}
 }

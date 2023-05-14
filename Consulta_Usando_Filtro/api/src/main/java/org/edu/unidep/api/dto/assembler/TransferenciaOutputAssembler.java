@@ -22,7 +22,7 @@ public class TransferenciaOutputAssembler {
 	
 	public List<TransferenciaModel> toCollectionModel(List<Transferencia> transferencias){
 		List<TransferenciaModel> transferenciasModel = new ArrayList<>();
-		for (Transferencia transferencia : transferencias) {
+		for(Transferencia transferencia : transferencias) {
 			transferenciasModel.add(toModel(transferencia));
 		}
 		

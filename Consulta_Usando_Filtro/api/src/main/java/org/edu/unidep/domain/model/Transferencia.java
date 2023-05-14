@@ -20,18 +20,19 @@ public class Transferencia {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "data_transferencia")
+	@Column(name = "data_transferencia", nullable = false)
 	private OffsetDateTime dataTransferencia;
 	
-	@Column(name = "valor")
+	@Column(name = "valor", nullable = false)
 	private BigDecimal valor;
 	
 	@Enumerated(EnumType.STRING)
 	private TransferenciaTipo tipo;
 	
-	@Column(name = "nome_operador_transacao")
+	@Column(name = "nome_operador_transacao", nullable = false)
 	private String nomeOperador;
 	
 	@ManyToOne

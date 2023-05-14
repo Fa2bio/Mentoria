@@ -5,6 +5,6 @@ import java.util.List;
 import org.edu.unidep.domain.filter.TransferenciaFilter;
 import org.edu.unidep.domain.model.Transferencia;
 
-public interface TransferenciaRepository{
-	List<Transferencia> getWithFilter(TransferenciaFilter filter);
+public interface TransferenciaRepository {
+	List<Transferencia> getWithFilter(TransferenciaFilter transferenciaFilter);
 }

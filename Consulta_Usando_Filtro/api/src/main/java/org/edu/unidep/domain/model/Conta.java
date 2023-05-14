@@ -17,10 +17,10 @@ public class Conta {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_conta")
+	@Column(name = "id_conta", nullable = false)
 	private Long idConta;
 	
-	@Column(name = "nome_responsavel")
+	@Column(name = "nome_responsavel", nullable = false)
 	private String nomeResponsavel;
 	
 	@OneToMany(mappedBy = "conta")
@@ -49,6 +49,5 @@ public class Conta {
 	public void setTransferencias(List<Transferencia> transferencias) {
 		this.transferencias = transferencias;
 	}
-	
 	
 }

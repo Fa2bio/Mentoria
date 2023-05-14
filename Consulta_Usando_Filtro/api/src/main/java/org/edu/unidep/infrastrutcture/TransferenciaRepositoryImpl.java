@@ -18,38 +18,38 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 @ApplicationScoped
 public class TransferenciaRepositoryImpl implements TransferenciaRepository, PanacheRepository<Transferencia>{
-	
+
 	@Override
-	public List<Transferencia> getWithFilter(TransferenciaFilter filter) {
+	public List<Transferencia> getWithFilter(TransferenciaFilter transferenciaFilter) {
 		
 		CriteriaBuilder criteriaBuilder = getEntityManager().getCriteriaBuilder();
-		
 		CriteriaQuery<Transferencia> query = criteriaBuilder.createQuery(Transferencia.class);
-		
 		Root<Transferencia> root = query.from(Transferencia.class);
-		
 		List<Predicate> predicates = new ArrayList<>();
 		
 		if(Transferencia.class.equals(query.getResultType())) {
 			root.fetch("conta");
 		}
 		
-		if(filter.getContaId() != null) {
-			predicates.add(criteriaBuilder.equal(root.get("conta"), filter.getContaId()));
-		}
-			
-		if(filter.getDataCriacaoInicio() != null) {
-			predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("dataTransferencia"), filter.getDataCriacaoInicio()));
+		if(transferenciaFilter.getDataTransferenciaInicio() != null) {
+			predicates.add(criteriaBuilder
+					.greaterThanOrEqualTo(root.get("dataTransferencia"),
+							transferenciaFilter.getDataTransferenciaInicio()));
 		}
 		
-		if(filter.getDataCriacaoFim() != null) {
-			predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("dataTransferencia"), filter.getDataCriacaoFim()));
+		if(transferenciaFilter.getDataTransferenciaFim() != null) {
+			predicates.add(criteriaBuilder
+					.lessThanOrEqualTo(root.get("dataTransferencia"),
+							transferenciaFilter.getDataTransferenciaFim()));
 		}
 		
-		if(filter.getNomeOperador() != null && !filter.getNomeOperador().equals("")) {
-			predicates.add(criteriaBuilder.equal(root.get("nomeOperador"), filter.getNomeOperador()));
+		if(transferenciaFilter.getNomeOperador() != null && !transferenciaFilter.getNomeOperador().equals("")) {
+			predicates.add(criteriaBuilder.equal(root.get("nomeOperador"), transferenciaFilter.getNomeOperador()));
 		}
 		
+		if(transferenciaFilter.getContaId() != null) {
+			predicates.add(criteriaBuilder.equal(root.get("conta"), transferenciaFilter.getContaId()));
+		}
 		
 		query.where(criteriaBuilder.and(predicates.toArray(new Predicate[0])));
 		
@@ -57,5 +57,6 @@ public class TransferenciaRepositoryImpl implements TransferenciaRepository, Pan
 		
 		return queryResult.getResultList();
 	}
+
 	
 }

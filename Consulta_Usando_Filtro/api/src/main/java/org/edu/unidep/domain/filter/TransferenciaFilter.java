@@ -4,36 +4,28 @@ import java.time.OffsetDateTime;
 
 public class TransferenciaFilter {
 
-	private Long contaId;
+	private OffsetDateTime dataTransferenciaInicio;
 	
-	private OffsetDateTime dataCriacaoInicio;
-	
-	private OffsetDateTime dataCriacaoFim;
+	private OffsetDateTime dataTransferenciaFim;
 	
 	private String nomeOperador;
+	
+	private Long contaId;
 
-	public Long getContaId() {
-		return contaId;
+	public OffsetDateTime getDataTransferenciaInicio() {
+		return dataTransferenciaInicio;
 	}
 
-	public void setContaId(Long contaId) {
-		this.contaId = contaId;
+	public void setDataTransferenciaInicio(OffsetDateTime dataTransferenciaInicio) {
+		this.dataTransferenciaInicio = dataTransferenciaInicio;
 	}
 
-	public OffsetDateTime getDataCriacaoInicio() {
-		return dataCriacaoInicio;
+	public OffsetDateTime getDataTransferenciaFim() {
+		return dataTransferenciaFim;
 	}
 
-	public void setDataCriacaoInicio(OffsetDateTime dataCriacaoInicio) {
-		this.dataCriacaoInicio = dataCriacaoInicio;
-	}
-
-	public OffsetDateTime getDataCriacaoFim() {
-		return dataCriacaoFim;
-	}
-
-	public void setDataCriacaoFim(OffsetDateTime dataCriacaoFim) {
-		this.dataCriacaoFim = dataCriacaoFim;
+	public void setDataTransferenciaFim(OffsetDateTime dataTransferenciaFim) {
+		this.dataTransferenciaFim = dataTransferenciaFim;
 	}
 
 	public String getNomeOperador() {
@@ -42,6 +34,14 @@ public class TransferenciaFilter {
 
 	public void setNomeOperador(String nomeOperador) {
 		this.nomeOperador = nomeOperador;
+	}
+
+	public Long getContaId() {
+		return contaId;
+	}
+
+	public void setContaId(Long contaId) {
+		this.contaId = contaId;
 	}
 	
 }
