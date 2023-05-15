@@ -1,0 +1,5 @@
+Olá, eu sou um arquivo de texto padrão no formato .txt
+Olá, eu sou um arquivo texto binário sequencial em formato .dat
+Olá, eu sou um arquivo de texto padrão no formato .pdf
+e possuo 2 páginas.
+
