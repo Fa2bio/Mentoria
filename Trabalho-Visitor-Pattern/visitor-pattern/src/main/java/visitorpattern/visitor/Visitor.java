@@ -2,9 +2,9 @@ package visitorpattern.visitor;
 
 import java.io.IOException;
 
-import visitorpattern.files.FileDat;
-import visitorpattern.files.FilePdf;
-import visitorpattern.files.FileTxt;
+import visitorpattern.file.FileDat;
+import visitorpattern.file.FilePdf;
+import visitorpattern.file.FileTxt;
 
 public interface Visitor {
 	String visit(FileDat file) throws IOException;

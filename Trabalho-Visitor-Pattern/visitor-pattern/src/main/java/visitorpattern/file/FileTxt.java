@@ -1,4 +1,4 @@
-package visitorpattern.files;
+package visitorpattern.file;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,27 +9,28 @@ import java.io.PrintWriter;
 import visitorpattern.visitor.Visitor;
 
 public class FileTxt implements FileManipulator{
-	
+
 	private String fileInputPath;
-	private String fileOutputPath;
+	private String fileOutPath;
 	
-	public FileTxt(String fileInputPath,String fileOutputPath) {
+	public FileTxt(String fileInputPath, String fileOutPath) {
 		this.fileInputPath = fileInputPath;
-		this.fileOutputPath = fileOutputPath;
+		this.fileOutPath = fileOutPath;
 	}
 
 	@Override
 	public void fileWriter(String fileInputPath, String fileOutputPath) throws IOException{
+		
 		try {
 			FileWriter file = new FileWriter(fileOutputPath, true);
-			PrintWriter writefile = new PrintWriter(file);
-			String charcs = fileReader(fileInputPath);
+			PrintWriter writerFile = new PrintWriter(file);
 			
-			writefile.println(charcs);	
-		
-			writefile.close();
+			String characs = fileReader(fileInputPath);	
+			writerFile.println(characs);	
+			
 			file.close();
-		} catch (IOException e) {
+			writerFile.close();
+		} catch (Exception e) {
 			throw e;
 		}
 	}
@@ -37,27 +38,29 @@ public class FileTxt implements FileManipulator{
 	@Override
 	public String fileReader(String fileInputPath) throws IOException{
 		StringBuilder sb = new StringBuilder();
+		
 		try {
 			FileReader file = new FileReader(fileInputPath);
 			BufferedReader fileReader = new BufferedReader(file);
-			String line;	
+			
+			String line;
 			while((line = fileReader.readLine()) != null) {
-				sb.append(line.replace("\n", "\r\n"));
+				sb.append(line);
 			}
 			
+			file.close();
 			fileReader.close();
-			file.close();			
 			return sb.toString();
 		} catch (IOException e) {
-			 throw e;
+			throw e;
 		}
 	}
 
 	@Override
-	public String accept(Visitor visitor) throws IOException {
+	public String accept(Visitor visitor) throws IOException{
 		return visitor.visit(this);
 	}
-
+	
 	public String getFileInputPath() {
 		return fileInputPath;
 	}
@@ -66,12 +69,11 @@ public class FileTxt implements FileManipulator{
 		this.fileInputPath = fileInputPath;
 	}
 
-	public String getFileOutputPath() {
-		return fileOutputPath;
+	public String getFileOutPath() {
+		return fileOutPath;
 	}
 
-	public void setFileOutputPath(String fileOutputPath) {
-		this.fileOutputPath = fileOutputPath;
+	public void setFileOutPath(String fileOutPath) {
+		this.fileOutPath = fileOutPath;
 	}
-
 }
