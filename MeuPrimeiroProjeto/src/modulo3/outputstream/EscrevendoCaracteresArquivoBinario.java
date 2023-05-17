@@ -11,7 +11,7 @@ public class EscrevendoCaracteresArquivoBinario {
 			FileOutputStream file = new FileOutputStream("FileOutputDat.dat");
 			DataOutputStream fileWrite = new DataOutputStream(file);
 			fileWrite.writeChars(s);
-			
+			System.out.println("Arquivo gravado com sucesso");
 			fileWrite.close();
 			file.close();
 		} catch (IOException e) {
