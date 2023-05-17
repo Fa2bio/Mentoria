@@ -1,0 +1,1 @@
+Olá, eu sou um arquivo de texto padrão no formato .txt
