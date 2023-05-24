@@ -1,6 +1,7 @@
 package org.edu.unidep.domain.repository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +13,9 @@ public interface ProdutoRepository {
 
     Optional<Produto> listarProdutoPeloCodigo(Long id);
 
-    BigDecimal retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(Long codigoProduto);
+    BigDecimal retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim);
 
-    BigDecimal retornarQuantidadeTotalEmReais(Long codigoProduto);
+    BigDecimal retornarQuantidadeTotalEmReais(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim);
     
     void salvar(Produto produto);
 
