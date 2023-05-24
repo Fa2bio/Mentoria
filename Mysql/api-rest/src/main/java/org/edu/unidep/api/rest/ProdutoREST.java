@@ -1,5 +1,6 @@
 package org.edu.unidep.api.rest;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -72,10 +73,11 @@ public class ProdutoREST {
     @Path("/{id}/quantidade-total")
     @Produces(MediaType.APPLICATION_JSON)
     public Response retornarProdutoComQuantidadeTotal(
-            @PathParam("id") Long codigoProduto
-    ) {
+            @PathParam("id") Long codigoProduto) {
 
-        ProdutoQuery produtoQuery = produtoService.retornarProdutoComQuantidadeTotal(codigoProduto);
+    	LocalDate dataInicio = LocalDate.parse("2023-04-10");
+    	LocalDate dataFim = LocalDate.parse("2023-05-16");
+        ProdutoQuery produtoQuery = produtoService.retornarProdutoComQuantidadeTotal(codigoProduto, dataInicio, dataFim);
 
         return Response.ok(produtoQuery).build();
     }
@@ -87,7 +89,9 @@ public class ProdutoREST {
             @PathParam("id") Long codigoProduto
     ) {
 
-        ProdutoQuery produtoQuery = produtoService.retornarQuantidadeTotalEmReais(codigoProduto);
+    	LocalDate dataInicio = LocalDate.parse("2023-04-10");
+    	LocalDate dataFim = LocalDate.parse("2023-05-16");
+        ProdutoQuery produtoQuery = produtoService.retornarQuantidadeTotalEmReais(codigoProduto, dataInicio, dataFim);
 
         return Response.ok(produtoQuery).build();
     }

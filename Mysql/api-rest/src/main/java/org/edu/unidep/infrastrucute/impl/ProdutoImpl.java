@@ -29,8 +29,7 @@ public class ProdutoImpl implements PanacheRepository<Produto>,
 
     @Override
     public BigDecimal retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(
-            Long codigoProduto
-    ) {
+    		Long codigoProduto, LocalDate dataInicio, LocalDate dataFim) {
 
         String jpql = """
                     SELECT SUM(v.quantidade) FROM Venda v
@@ -42,15 +41,15 @@ public class ProdutoImpl implements PanacheRepository<Produto>,
         return getEntityManager()
                 .createQuery(jpql, BigDecimal.class)
                 .setParameter("codigo", codigoProduto)
-                .setParameter("primeiroDiaMesAtual", retonarPrimeiroDiaDoMesAtual())
-                .setParameter("ultimoDiaMesAtual", retonarUltimoDiaDoMesAtual())
+                .setParameter("primeiroDiaMesAtual", dataInicio)
+                .setParameter("ultimoDiaMesAtual", dataFim)
                 .getResultStream()
                 .findAny()
                 .orElseThrow();
     }
 
     @Override
-    public BigDecimal retornarQuantidadeTotalEmReais(Long codigoProduto) {
+    public BigDecimal retornarQuantidadeTotalEmReais(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim) {
         String jpql = """
                     SELECT SUM(v.valorTotal) FROM Venda v
                         JOIN v.produto p WHERE p.id = :codigo
@@ -62,8 +61,8 @@ public class ProdutoImpl implements PanacheRepository<Produto>,
         return getEntityManager()
                 .createQuery(jpql, BigDecimal.class)
                 .setParameter("codigo", codigoProduto)
-                .setParameter("primeiroDiaMesAtual", retonarPrimeiroDiaDoMesAtual())
-                .setParameter("ultimoDiaMesAtual", retonarUltimoDiaDoMesAtual())
+                .setParameter("primeiroDiaMesAtual", dataInicio)
+                .setParameter("ultimoDiaMesAtual", dataFim)
                 .getResultStream()
                 .findAny()
                 .orElseThrow();
@@ -80,14 +79,5 @@ public class ProdutoImpl implements PanacheRepository<Produto>,
 	public void deletar(Produto produto) {
 		delete(produto);
 		getEntityManager().flush();
-	}	
-
-    private LocalDate retonarPrimeiroDiaDoMesAtual() {
-        return LocalDate.now();
-    }
-
-    private LocalDate retonarUltimoDiaDoMesAtual() {
-        return LocalDate.now();
-    }
-
+	}
 }

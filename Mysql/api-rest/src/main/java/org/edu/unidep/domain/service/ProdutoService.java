@@ -73,25 +73,24 @@ public class ProdutoService {
 		else throw new ConstraintViolationException(constraintViolations);
 	}
     
-    public ProdutoQuery retornarProdutoComQuantidadeTotal(Long codigoProduto) {
+    public ProdutoQuery retornarProdutoComQuantidadeTotal(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim) {
         Produto produto =acharOuFalhar(codigoProduto);
 
         BigDecimal quantidadeTotal =
-                produtoRepository.retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(codigoProduto);
-
+                produtoRepository.retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(codigoProduto, dataInicio, dataFim);
 
         return new ProdutoQuery(
-                quantidadeTotal,
+        		quantidadeTotal,
                 LocalDate.now().getMonth(),
                 produto.getUnidadeMedida());
 
     }
 
-    public ProdutoQuery retornarQuantidadeTotalEmReais(Long codigoProduto) {
+    public ProdutoQuery retornarQuantidadeTotalEmReais(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim) {
         Produto produto =acharOuFalhar(codigoProduto);
 
         BigDecimal quantidadeEmReais =
-                produtoRepository.retornarQuantidadeTotalEmReais(codigoProduto);
+                produtoRepository.retornarQuantidadeTotalEmReais(codigoProduto, dataInicio, dataFim);
 
 
         return new ProdutoQuery(
