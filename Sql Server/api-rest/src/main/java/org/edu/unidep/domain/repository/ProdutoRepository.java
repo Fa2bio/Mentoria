@@ -13,9 +13,9 @@ public interface ProdutoRepository {
 
     Optional<Produto> listarProdutoPeloCodigo(Long id);
 
-    BigDecimal retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim);
+    Optional<BigDecimal> retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim);
 
-    BigDecimal retornarQuantidadeTotalEmReais(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim);
+    Optional<BigDecimal> retornarQuantidadeTotalEmReais(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim);
     
     void salvar(Produto produto);
 
