@@ -75,8 +75,9 @@ public class ProdutoREST {
     public Response retornarProdutoComQuantidadeTotal(
             @PathParam("id") Long codigoProduto) {
 
-    	LocalDate dataInicio = LocalDate.parse("2023-04-10");
+    	LocalDate dataInicio = LocalDate.parse("2023-04-15");
     	LocalDate dataFim = LocalDate.parse("2023-05-16");
+
         ProdutoQuery produtoQuery = produtoService.retornarProdutoComQuantidadeTotal(codigoProduto, dataInicio, dataFim);
 
         return Response.ok(produtoQuery).build();

@@ -18,6 +18,7 @@ import org.edu.unidep.api.command.ProdutoQuery;
 import org.edu.unidep.api.rest.request.ProdutoRequest;
 import org.edu.unidep.domain.exception.ProdutoEmUsoException;
 import org.edu.unidep.domain.exception.ProdutoNaoEncontradoException;
+import org.edu.unidep.domain.exception.RelatorioNaoGeradoException;
 import org.edu.unidep.domain.model.Produto;
 import org.edu.unidep.domain.repository.ProdutoRepository;
 
@@ -77,7 +78,8 @@ public class ProdutoService {
         Produto produto =acharOuFalhar(codigoProduto);
 
         BigDecimal quantidadeTotal =
-                produtoRepository.retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(codigoProduto, dataInicio, dataFim);
+                produtoRepository.retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(codigoProduto, dataInicio, dataFim)
+                .orElseThrow(()-> new RelatorioNaoGeradoException(codigoProduto));
 
         return new ProdutoQuery(
         		quantidadeTotal,
@@ -90,7 +92,8 @@ public class ProdutoService {
         Produto produto =acharOuFalhar(codigoProduto);
 
         BigDecimal quantidadeEmReais =
-                produtoRepository.retornarQuantidadeTotalEmReais(codigoProduto, dataInicio, dataFim);
+                produtoRepository.retornarQuantidadeTotalEmReais(codigoProduto, dataInicio, dataFim)
+                .orElseThrow(()-> new RelatorioNaoGeradoException(codigoProduto));
 
 
         return new ProdutoQuery(

@@ -27,8 +27,8 @@ public class ProdutoImpl implements PanacheRepository<Produto>,
     	return findByIdOptional(id);
     }
 
-    @Override
-    public BigDecimal retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(
+	@Override
+    public Optional<BigDecimal> retornarQuantidadeTotalProdutoEDataEmUnidadeMedida(
     		Long codigoProduto, LocalDate dataInicio, LocalDate dataFim) {
 
         String jpql = """
@@ -37,19 +37,20 @@ public class ProdutoImpl implements PanacheRepository<Produto>,
                             AND v.data >= :primeiroDiaMesAtual
                             AND v.data <= :ultimoDiaMesAtual
                 """;
-
+        
         return getEntityManager()
                 .createQuery(jpql, BigDecimal.class)
                 .setParameter("codigo", codigoProduto)
                 .setParameter("primeiroDiaMesAtual", dataInicio)
                 .setParameter("ultimoDiaMesAtual", dataFim)
                 .getResultStream()
-                .findAny()
-                .orElseThrow();
+                .filter(i -> i != null)
+                .findAny();
+        
     }
 
     @Override
-    public BigDecimal retornarQuantidadeTotalEmReais(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim) {
+    public Optional<BigDecimal> retornarQuantidadeTotalEmReais(Long codigoProduto, LocalDate dataInicio, LocalDate dataFim) {
         String jpql = """
                     SELECT SUM(v.valorTotal) FROM Venda v
                         JOIN v.produto p WHERE p.id = :codigo
@@ -64,8 +65,9 @@ public class ProdutoImpl implements PanacheRepository<Produto>,
                 .setParameter("primeiroDiaMesAtual", dataInicio)
                 .setParameter("ultimoDiaMesAtual", dataFim)
                 .getResultStream()
-                .findAny()
-                .orElseThrow();
+                .filter(i -> i != null)
+                .findAny();
+
     }
     
     @Transactional
