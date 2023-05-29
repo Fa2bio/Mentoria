@@ -1,0 +1,27 @@
+================== Modelo de entidade e Relacionamentos ==================
+
+[1] Gostaria de rastrear informações sobre esses produtos, como nome, descrição, preço, estoque disponível e fornecedores, onde registramos informações como nome, endereço e detalhes de contato.
+
+Entidades:
+
+- Fornecedor (id, nome, endereco, info_contato)
+- Produto (id, nome, descricao, preco, estoque, id_fornecedor)
+
+--------------------------------------------------------------------------------------
+
+[2] Além disso, seria importante registrar informações sobre os clientes, como nome, endereço, número de telefone e histórico de compras.
+
+Entidades:
+
+- Cliente (id, nome, endereco, telefone)
+- Compras(descricao, data_compra, id_produto, id_cliente)
+
+--------------------------------------------------------------------------------------
+
+[3] Uma tabela para os serviços oferecidos, onde poderemos armazenar informações como nome do serviço, preço, duração e disponibilidade.
+
+Entidades:
+
+- Servico(id, nome, preco, duracao, disponibilidade)
+
+--------------------------------------------------------------------------------------
