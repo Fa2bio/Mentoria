@@ -15,10 +15,10 @@ create table produto(
     descricao VARCHAR(1000) NOT NULL,
 	preco DECIMAL(10,2) NOT NULL,
     estoque_disponivel BIGINT NOT NULL,
-    fornecedor_id BIGINT NOT NULL,
+    fornecedor_codigo BIGINT NOT NULL,
     
     PRIMARY KEY (codigo_produto),
-    CONSTRAINT fk_produto_fornecedor FOREIGN KEY (fornecedor_id) REFERENCES fornecedor (codigo_fornecedor)
+    CONSTRAINT fk_produto_fornecedor FOREIGN KEY (fornecedor_codigo) REFERENCES fornecedor (codigo_fornecedor)
 );
 
 create table cliente(
