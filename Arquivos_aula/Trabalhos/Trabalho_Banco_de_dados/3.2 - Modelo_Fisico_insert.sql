@@ -15,5 +15,3 @@ insert into compras values (2,"2023-02-10", 2,1,null);
 insert into compras values (3,"2022-12-08", 2,2,null);
 insert into compras values (4,"2022-12-08", null,2,1);
 insert into compras values (5,"2022-12-08", null,1,2);
-
-select * from compras;

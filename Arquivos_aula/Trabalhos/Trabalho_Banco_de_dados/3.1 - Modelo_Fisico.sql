@@ -1,12 +1,31 @@
 CREATE DATABASE trabalho_ads;
 USE trabalho_ads;
 
+create table cliente(
+	codigo_cliente BIGINT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    endereco VARCHAR(1000) NOT NULL,
+    telefone VARCHAR(16) NOT NULL,
+    
+    PRIMARY KEY (codigo_cliente)
+);
+
 create table fornecedor(
 	codigo_fornecedor BIGINT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     info_contato VARCHAR(1000) NOT NULL,
     
     PRIMARY KEY (codigo_fornecedor)
+);
+
+create table servico(
+	codigo_servico BIGINT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    duracao TIME NOT NULL,
+	disponibilidade TINYINT,
+    
+    PRIMARY KEY (codigo_servico)
 );
 
 create table produto(
@@ -19,25 +38,6 @@ create table produto(
     
     PRIMARY KEY (codigo_produto),
     CONSTRAINT fk_produto_fornecedor FOREIGN KEY (fornecedor_codigo) REFERENCES fornecedor (codigo_fornecedor)
-);
-
-create table cliente(
-	codigo_cliente BIGINT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    endereco VARCHAR(1000) NOT NULL,
-    telefone VARCHAR(16) NOT NULL,
-    
-    PRIMARY KEY (codigo_cliente)
-);
-
-create table servico(
-	codigo_servico BIGINT NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    preco DECIMAL(10,2) NOT NULL,
-    duracao TIME NOT NULL,
-	disponibilidade TINYINT,
-    
-    PRIMARY KEY (codigo_servico)
 );
 
 create table compras(
