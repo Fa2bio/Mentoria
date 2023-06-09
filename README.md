@@ -1,7 +1,6 @@
 <h1>Mentoria</h1>
 
 > Status: Em desenvolvimento ⚠️
-Fiz uma alteracao
 
 ## Conteúdo
   
