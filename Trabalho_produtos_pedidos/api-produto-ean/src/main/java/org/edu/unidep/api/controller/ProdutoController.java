@@ -34,9 +34,10 @@ public class ProdutoController {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ProdutoResponse> listarTodos() {
-        return produtoOutputAssembler
-        		.toCollectionResponse(produtoService.listar());
+    public Response listarTodos() {
+    	List<Produto> produtos = produtoService.listar();
+    	if(produtos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+        return Response.ok(produtoOutputAssembler.toCollectionResponse(produtos)).build();
     }
     
 	@GET
