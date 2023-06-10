@@ -23,7 +23,7 @@ public class OrcamentoImpl implements PanacheRepository<Orcamento>,
 	@Override
 	public List<Orcamento> listarPelaData(LocalDate data) {
 		String jpql = """
-                SELECT o FROM Orcamento o WHERE o.data >= :data
+                SELECT o FROM Orcamento o WHERE o.data = :data
             """;
 
 		return getEntityManager()
@@ -50,7 +50,7 @@ public class OrcamentoImpl implements PanacheRepository<Orcamento>,
 	@Override
 	public List<Orcamento> listarPelaDataValidade(LocalDate data) {
 		String jpql = """
-                SELECT o FROM Orcamento o WHERE o.dataValidade >= :data
+                SELECT o FROM Orcamento o WHERE o.dataValidade = :data
             """;
 
 		return getEntityManager()
