@@ -33,26 +33,30 @@ public class PedidoController {
 	
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PedidoResponse> listarTodos() {
-        return pedidoAssembler
-        		.toCollectionResponse(pedidoService.listar());
+    public Response listarTodos() {
+    	List<Pedido> pedidos = pedidoService.listar();
+    	if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+        return Response.ok(pedidoAssembler.toCollectionResponse(pedidos)).build();
     }
     
     @GET
     @Path("/listarpeladata/{data}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PedidoResponse> listarTodosPelaData(@PathParam("data") String data) {
+    public Response listarTodosPelaData(@PathParam("data") String data) {
     	LocalDate localDate = LocalDate.parse(data);
-        return pedidoAssembler
-        		.toCollectionResponse(pedidoService.listarPelaData(localDate));
+    	List<Pedido> pedidos = pedidoService.listarPelaData(localDate);
+    	if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+        return Response.ok(pedidoAssembler.toCollectionResponse(pedidos)).build();
+
     }
     
     @GET
     @Path("/listarpelonome/{nome}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<PedidoResponse> listarTodosPeloNome(@PathParam("nome") String nome) {
-        return pedidoAssembler
-        		.toCollectionResponse(pedidoService.listarPeloNomeCliente(nome));
+    public Response listarTodosPeloNome(@PathParam("nome") String nome) {
+    	List<Pedido> pedidos = pedidoService.listarPeloNomeCliente(nome);
+    	if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+        return Response.ok(pedidoAssembler.toCollectionResponse(pedidos)).build();
     }
     
 	@GET
