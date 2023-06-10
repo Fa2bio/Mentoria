@@ -35,9 +35,10 @@ public class ClienteController {
 	
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ClienteResumoResponse> listarTodos() {
-        return clienteAssembler
-        		.toCollectionResumoResponse(clienteService.listar());
+    public Response listarTodos() {
+    	List<Cliente> clientes = clienteService.listar();
+    	if(clientes.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+        return Response.ok(clienteAssembler.toCollectionResumoResponse(clientes)).build();
     }
     
 	@GET
