@@ -34,38 +34,42 @@ public class OrcamentoController {
 	
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<OrcamentoResponse> listarTodos() {
-        return orcamentoAssembler
-        		.toCollectionResponse(orcamentoService.listar());
+    public Response listarTodos() {    	
+    	List<Orcamento> orcamentos = orcamentoService.listar();
+		if(orcamentos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+		return Response.ok(orcamentoAssembler.toCollectionResponse(orcamentos)).build();	
     }
     
 	@GET
 	@Path("/listarpeladata/{data}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<OrcamentoResponse> listarPelaData(
+	public Response listarPelaData(
 			@PathParam("data") String data) {
 		LocalDate localDate = LocalDate.parse(data);
-		return orcamentoAssembler
-        		.toCollectionResponse(orcamentoService.buscarPelaData(localDate));	
+		List<Orcamento> orcamentos = orcamentoService.buscarPelaData(localDate);
+		if(orcamentos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+		return Response.ok(orcamentoAssembler.toCollectionResponse(orcamentos)).build();	
 	}
 	
 	@GET
 	@Path("/listarpeladatavalidade/{data}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<OrcamentoResponse> listarPelaDataValidade(
+	public Response listarPelaDataValidade(
 			@PathParam("data") String data) {
 		LocalDate localDate = LocalDate.parse(data);
-		return orcamentoAssembler
-        		.toCollectionResponse(orcamentoService.buscarPelaDataValidade(localDate));	
+		List<Orcamento> orcamentos = orcamentoService.buscarPelaDataValidade(localDate);
+		if(orcamentos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+		return Response.ok(orcamentoAssembler.toCollectionResponse(orcamentos)).build();	
 	}
 	
 	@GET
 	@Path("/listarpelovalor/{valor}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<OrcamentoResponse> listarPeloValor(
-			@PathParam("valor") BigDecimal valor) {
-		return orcamentoAssembler
-        		.toCollectionResponse(orcamentoService.buscarPeloValor(valor));	
+	public Response listarPeloValor(
+			@PathParam("valor") BigDecimal valor) {		
+		List<Orcamento> orcamentos = orcamentoService.buscarPeloValor(valor);
+		if(orcamentos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+		return Response.ok(orcamentoAssembler.toCollectionResponse(orcamentos)).build();
 	}
     
 	@GET
