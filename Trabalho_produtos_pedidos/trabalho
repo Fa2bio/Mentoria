@@ -1,0 +1,17 @@
+1. Métodos criar, listar todos, listar pelo código, excluir e editar um produto, com os determinados campos:
+
+   a. Código do produto, nome, categoria, código EAN e data de validade.
+
+   ENTIDADES: PRODUTO
+
+2. Métodos criar, listar todos, listar pelo código, listar pela data do orçamento e listar orçamentos de maiores valores, com os determinados campos:
+
+     a. Código do orçamento, data, data de validade e valor.
+
+     ENTIDADES: ORCAMENTO
+
+3. Métodos criar, listar todos, listar pela data do pedido e listar pelo nome do cliente, com os determinados campos:
+
+    a. Código do pedido, data de emissão, cliente e código do orçamento.
+
+    ENTIDADES: PEDIDO e CLIENTE
