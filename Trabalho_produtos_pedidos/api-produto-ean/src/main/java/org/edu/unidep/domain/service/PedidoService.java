@@ -19,40 +19,40 @@ public class PedidoService {
 	@Inject
 	private PedidoRepository pedidoRepository;
 	
-	@Inject 
+	@Inject
 	private ClienteService clienteService;
 	
-	@Inject 
+	@Inject
 	private OrcamentoService orcamentoService;
 	
-	public List<Pedido> listar() {
+	public List<Pedido> listar(){
 		return pedidoRepository.listar();
-	}  
+	}
 	
-	public List<Pedido> listarPelaData(LocalDate data) {
+	public List<Pedido> listarPelaData(LocalDate data){
 		return pedidoRepository.listarPelaData(data);
-	} 
+	}
 	
-	public List<Pedido> listarPeloNomeCliente(String nome) {
+	public List<Pedido> listarPeloNomeCliente(String nome){
 		return pedidoRepository.listarPeloNomeCliente(nome);
-	} 
+	}
 	
-	public Pedido buscarPorCodigo(Long id) {
-		return pedidoRepository.listarPedidoPeloCodigo(id);
+	public Pedido buscarPeloCodigo(Long id) {
+		return pedidoRepository.listarPeloCodigo(id);
 	}
 	
 	@Transactional
-	public void salvar(PedidoModel pedidoInput) {
+	public void criar(PedidoModel pedidoModel) {
 		Pedido pedido = new Pedido();
-		pedido.setData(pedidoInput.data());
+		pedido.setDataEmissao(pedidoModel.data());
 		
-		Cliente cliente = clienteService.buscarPorCodigo(pedidoInput.cliente().id());
+		Cliente cliente = clienteService.buscarPorCodigo(pedidoModel.cliente().id());
 		pedido.setCliente(cliente);
 		
-		Orcamento orcamento = orcamentoService.buscarPorCodigo(pedidoInput.orcamento().id());
+		Orcamento orcamento = orcamentoService.buscarPeloCodigo(pedidoModel.orcamento().id());
+		
 		pedido.setOrcamento(orcamento);
-
-		pedidoRepository.salvar(pedido);
+		
+		pedidoRepository.criar(pedido);
 	}
-	
 }

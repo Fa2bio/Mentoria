@@ -17,11 +17,11 @@ public class ProdutoAssembler {
 				produto.getNome(),
 				produto.getCategoria(),
 				produto.getCodigoEan(),
-				produto.getDataValidade()
-		);
+				produto.getDataValidade()				
+				);
 	}
-
-	public List<ProdutoResponse> toCollectionResponse(List<Produto> produtos){		
+	
+	public List<ProdutoResponse> toCollectionResponse(List<Produto> produtos){
 		return produtos.stream()
 				.map(produto -> toResponse(produto))
 				.collect(Collectors.toList());

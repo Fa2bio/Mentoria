@@ -11,26 +11,26 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record PedidoRequest(
 		
+		@NotNull
 		@JsonProperty("data_emissao")
-        @NotNull
 		LocalDate data,
 		
-		@JsonProperty("cliente")
 		@NotNull
 		@Valid
+		@JsonProperty("cliente")
 		ClienteIdRequest cliente,
 		
-		@JsonProperty("orcamento")
-		@NotNull 
+		@NotNull
 		@Valid
-		OrcamentoIdRequest orcamento		
+		@JsonProperty("orcamento")
+		OrcamentoIdRequest orcamento
 		) {
 
-	   public static PedidoModel toModel(PedidoRequest input) {
-	        return new PedidoModel(
-	                input.data,
-	                input.cliente,
-	                input.orcamento
-	       );
-	   }
+	public static PedidoModel toModel(PedidoRequest pedidoRequest) {
+		return new PedidoModel(
+				pedidoRequest.data,
+				pedidoRequest.cliente,
+				pedidoRequest.orcamento
+				);
+	}
 }

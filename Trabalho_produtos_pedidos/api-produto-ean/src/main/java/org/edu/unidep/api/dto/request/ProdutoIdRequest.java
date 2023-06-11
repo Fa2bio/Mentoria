@@ -5,8 +5,10 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ProdutoIdRequest(
-		@JsonProperty("codigo_produto")
+		
 		@NotNull
-		Long id) {
+		@JsonProperty("codigo_produto")
+		Long id
+		) {
 
 }

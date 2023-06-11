@@ -1,6 +1,5 @@
 package org.edu.unidep.domain.model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
@@ -16,25 +15,23 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "pedido")
-public class Pedido implements Serializable{
+public class Pedido {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_pedido")
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo_pedido")
+	private Long id;
 	
-    @Column(name = "data_emissao", nullable = false)
-    private LocalDate data;
-    
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "codigo_cliente")
-    private Cliente cliente;
-    
-    @OneToOne
-    @JoinColumn(name = "codigo_orcamento")
-    private Orcamento orcamento;
+	@Column(name = "data_emissao")
+	private LocalDate dataEmissao;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "codigo_cliente")
+	private Cliente cliente;
+	
+	@OneToOne
+	@JoinColumn(name = "codigo_orcamento")
+	private Orcamento orcamento;
 
 	public Long getId() {
 		return id;
@@ -44,12 +41,12 @@ public class Pedido implements Serializable{
 		this.id = id;
 	}
 
-	public LocalDate getData() {
-		return data;
+	public LocalDate getDataEmissao() {
+		return dataEmissao;
 	}
 
-	public void setData(LocalDate data) {
-		this.data = data;
+	public void setDataEmissao(LocalDate dataEmissao) {
+		this.dataEmissao = dataEmissao;
 	}
 
 	public Cliente getCliente() {
@@ -67,9 +64,5 @@ public class Pedido implements Serializable{
 	public void setOrcamento(Orcamento orcamento) {
 		this.orcamento = orcamento;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
- 
+	
 }

@@ -10,28 +10,27 @@ import org.edu.unidep.api.dto.model.OrcamentoModel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-
 public record OrcamentoRequest(
 		
-        @NotNull
-        @JsonProperty("data")
+		@NotNull
+		@JsonProperty("data")
 		LocalDate data,
 		
-        @NotNull 
-        @JsonProperty("data_validade")
+		@NotNull
+		@JsonProperty("data_validade")
 		LocalDate dataValidade,
 		
-        @NotNull 
-        @Valid
-        @JsonProperty("itens")
+		@NotNull
+		@Valid
+		@JsonProperty("itens")
 		List<ItemRequest> itens
+		
 		) {
-
-    public static OrcamentoModel toModel(OrcamentoRequest input) {
-        return new OrcamentoModel(
-                input.data,
-                input.dataValidade,
-                input.itens
-       );
-    }
+	public static OrcamentoModel toModel(OrcamentoRequest orcamentoRequest) {
+		return new OrcamentoModel(
+				orcamentoRequest.data,
+				orcamentoRequest.dataValidade,
+				orcamentoRequest.itens
+				);
+	}
 }

@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import org.edu.unidep.api.dto.request.PedidoRequest;
 import org.edu.unidep.api.dto.response.PedidoResponse;
 import org.edu.unidep.api.dto.response.PedidoResumoResponse;
+import org.edu.unidep.domain.model.Cliente;
+import org.edu.unidep.domain.model.Orcamento;
 import org.edu.unidep.domain.model.Pedido;
 import org.edu.unidep.domain.service.ClienteService;
 import org.edu.unidep.domain.service.OrcamentoService;
@@ -16,7 +18,7 @@ import org.edu.unidep.domain.service.OrcamentoService;
 @ApplicationScoped
 public class PedidoAssembler {
 
-	@Inject
+	@Inject 
 	private OrcamentoAssembler orcamentoAssembler;
 	
 	@Inject
@@ -25,41 +27,45 @@ public class PedidoAssembler {
 	@Inject
 	private ClienteService clienteService;
 	
-	@Inject 
+	@Inject
 	private OrcamentoService orcamentoService;
 	
 	public Pedido toDomainObject(PedidoRequest pedidoRequest) {
 		Pedido pedido = new Pedido();
-		pedido.setData(pedidoRequest.data());
-		pedido.setCliente(clienteService.buscarPorCodigo(pedidoRequest.cliente().id()));
-		pedido.setOrcamento(orcamentoService.buscarPorCodigo(pedidoRequest.orcamento().id()));
+		pedido.setDataEmissao(pedidoRequest.data());
+		
+		Cliente cliente = clienteService.buscarPorCodigo(pedidoRequest.cliente().id());
+		pedido.setCliente(cliente);
+		
+		Orcamento orcamento = orcamentoService.buscarPeloCodigo(pedidoRequest.orcamento().id());
+		pedido.setOrcamento(orcamento);
 		return pedido;
 	}
 	
 	public PedidoResponse toResponse(Pedido pedido) {
 		return new PedidoResponse(
 				pedido.getId(),
-				pedido.getData(),
+				pedido.getDataEmissao(),
 				orcamentoAssembler.toResponse(pedido.getOrcamento()),
 				clienteAssembler.toResumoResponse(pedido.getCliente())
-		);
+				);
 	}
 	
 	public PedidoResumoResponse toResumoResponse(Pedido pedido) {
 		return new PedidoResumoResponse(
 				pedido.getId(),
-				pedido.getData(),
+				pedido.getDataEmissao(),
 				orcamentoAssembler.toResponse(pedido.getOrcamento())
-		);
+				);
 	}
 	
-	public List<PedidoResponse> toCollectionResponse(List<Pedido> pedidos){		
+	public List<PedidoResponse> toCollectionResponse(List<Pedido> pedidos){
 		return pedidos.stream()
 				.map(pedido -> toResponse(pedido))
 				.collect(Collectors.toList());
 	}
-
-	public List<PedidoResumoResponse> toCollectionResumoResponse(List<Pedido> pedidos){		
+	
+	public List<PedidoResumoResponse> toCollectionResumoResponse(List<Pedido> pedidos){
 		return pedidos.stream()
 				.map(pedido -> toResumoResponse(pedido))
 				.collect(Collectors.toList());

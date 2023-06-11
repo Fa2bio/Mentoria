@@ -10,47 +10,48 @@ import javax.transaction.Transactional;
 
 import org.edu.unidep.api.dto.assembler.ItemAssembler;
 import org.edu.unidep.api.dto.model.OrcamentoModel;
+import org.edu.unidep.domain.model.Item;
 import org.edu.unidep.domain.model.Orcamento;
 import org.edu.unidep.domain.repository.OrcamentoRepository;
 
 @ApplicationScoped
 public class OrcamentoService {
-	
+
 	@Inject
 	private OrcamentoRepository orcamentoRepository;
 	
 	@Inject
 	private ItemAssembler itemAssembler;
 	
-	public List<Orcamento> listar() {
+	public List<Orcamento> listar(){
 		return orcamentoRepository.listar();
 	}
 	
-	public List<Orcamento> buscarPelaData(LocalDate data) {
+	public List<Orcamento> buscarPelaData(LocalDate data){
 		return orcamentoRepository.listarPelaData(data);
 	}
 	
-	public List<Orcamento> buscarPelaDataValidade(LocalDate data) {
-		return orcamentoRepository.listarPelaDataValidade(data);
+	public List<Orcamento> buscarPelaDataValidade(LocalDate dataValidade){
+		return orcamentoRepository.listarPelaDataValidade(dataValidade);
 	}
 	
-	public List<Orcamento> buscarPeloValor(BigDecimal valor) {
-		return orcamentoRepository.listarPeloMaiorValor(valor);
+	public List<Orcamento> buscarPeloValor(BigDecimal valor){
+		return orcamentoRepository.listarPorMaiorValor(valor);
 	}
 	
-	public Orcamento buscarPorCodigo(Long id) {
-		return orcamentoRepository.listarOrcamentoPeloCodigo(id);
+	public Orcamento buscarPeloCodigo(Long id) {
+		return orcamentoRepository.listarPeloCodigo(id);
 	}
 	
-    @Transactional
-    public void salvar(OrcamentoModel orcamentoModel){
-    	Orcamento orcamento = new Orcamento();
-    	orcamento.setData(orcamentoModel.data());
-    	orcamento.setDataValidade(orcamentoModel.dataValidade());
-    	orcamento.setItens(itemAssembler.toCollectionDomainObject(orcamentoModel.itens(), orcamento));
-    	orcamento.calcularValorTotal();
-    	
-    	orcamentoRepository.salvar(orcamento);
-    }
-
+	@Transactional
+	public void criar(OrcamentoModel orcamentoModel) {
+		Orcamento orcamento = new Orcamento();
+		orcamento.setData(orcamentoModel.data());
+		orcamento.setDataValidade(orcamentoModel.dataValidade());
+		List<Item> itens = itemAssembler.toCollectionDomainObject(orcamentoModel.itens(), orcamento);
+		orcamento.setItens(itens);
+		orcamento.calcularValorTotal();
+		
+		orcamentoRepository.criar(orcamento);
+	}
 }

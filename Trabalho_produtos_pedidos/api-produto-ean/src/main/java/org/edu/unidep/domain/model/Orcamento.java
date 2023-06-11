@@ -1,6 +1,5 @@
 package org.edu.unidep.domain.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,37 +17,35 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "orcamento")
-public class Orcamento implements Serializable{
+public class Orcamento {
 
-	private static final long serialVersionUID = 1L;
-	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_orcamento")
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo_orcamento")
+	private Long id;
 	
-    @Column(name = "data", nullable = false)
-    private LocalDate data;
+	@Column(name = "data", nullable = false)
+	private LocalDate data;
 	
-    @Column(name = "data_validade", nullable = false)
-    private LocalDate dataValidade;
-    
-    @Column(name = "valor", nullable = false)
-    private BigDecimal valor;
-    
-    @OneToOne(mappedBy = "orcamento")
-    private Pedido pedido;
+	@Column(name = "data_validade", nullable = false)
+	private LocalDate dataValidade;
+	
+	@Column(name = "valor", nullable = false)
+	private BigDecimal valor;
+	
+	@OneToMany(mappedBy = "orcamento", cascade = CascadeType.ALL)
+	private List<Item> itens = new ArrayList<>();
+	
+	@OneToOne(mappedBy = "orcamento")
+	private Pedido pedido;
+	
+	public void calcularValorTotal() {
+		getItens().forEach(Item::calcularValorTotal);
+		this.valor = getItens().stream()
+				.map(item -> item.getValorTotal())
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+	}
 
-    @OneToMany(mappedBy = "orcamento", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Item> itens = new ArrayList<>();
-    
-    public void calcularValorTotal() {
-    	getItens().forEach(Item::calcularValorTotal);
-    	this.valor = getItens().stream()
-    			.map(item -> item.getValorTotal())
-    			.reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-    
 	public Long getId() {
 		return id;
 	}
@@ -90,8 +86,12 @@ public class Orcamento implements Serializable{
 		this.itens = itens;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Pedido getPedido() {
+		return pedido;
 	}
-    
+
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+
 }

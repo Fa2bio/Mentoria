@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record ItemResponse(
 		
 		@JsonProperty("codigo_item")
-	    Long id,
-	    
-	    @JsonProperty("quantidade")
+		Long id,
+		
+		@JsonProperty("quantidade")
 		Integer quantidade,
 		
 		@JsonProperty("valor_total")
@@ -19,7 +19,8 @@ public record ItemResponse(
 		BigDecimal valorUnitario,
 		
 		@JsonProperty("produto")
-		ProdutoResponse produto		
+		ProdutoResponse produto
+		
 		) {
 
 }

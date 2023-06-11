@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record OrcamentoResponse(
 		
-		@JsonProperty("codigo_produto")
+		@JsonProperty("codigo_orcamento")
 		Long id,
 		
 		@JsonProperty("data")
@@ -21,7 +21,8 @@ public record OrcamentoResponse(
 		BigDecimal valor,
 		
 		@JsonProperty("itens")
-		List<ItemResponse> itens		
+		List<ItemResponse> itens
+		
 		) {
 
 }

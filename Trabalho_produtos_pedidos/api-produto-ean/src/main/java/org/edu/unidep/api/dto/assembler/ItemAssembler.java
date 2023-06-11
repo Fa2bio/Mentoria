@@ -10,11 +10,12 @@ import org.edu.unidep.api.dto.request.ItemRequest;
 import org.edu.unidep.api.dto.response.ItemResponse;
 import org.edu.unidep.domain.model.Item;
 import org.edu.unidep.domain.model.Orcamento;
+import org.edu.unidep.domain.model.Produto;
 import org.edu.unidep.domain.service.ProdutoService;
 
 @ApplicationScoped
 public class ItemAssembler {
-	
+
 	@Inject
 	private ProdutoAssembler produtoAssembler;
 	
@@ -27,30 +28,30 @@ public class ItemAssembler {
 				item.getQuantidade(),
 				item.getValorTotal(),
 				item.getValorUnitario(),
-				produtoAssembler.toResponse(item.getProduto())
-		);
+				produtoAssembler.toResponse(item.getProduto())				
+				);				
 	}
 	
 	public Item toDomainObject(ItemRequest itemRequest, Orcamento orcamento) {
-		Item item = new Item();
+		Item item = new Item();		
 		item.setQuantidade(itemRequest.quantidade());
 		item.setValorUnitario(itemRequest.valorUnitario());
 		item.calcularValorTotal();
-		item.setProduto(produtoService.buscarPorCodigo(itemRequest.produto().id()));
 		item.setOrcamento(orcamento);
+		Produto produto = produtoService.buscarPorCodigo(itemRequest.produto().id());
+		item.setProduto(produto);
 		return item;
 	}
 	
-	public List<ItemResponse> toCollectionResponse(List<Item> itens){		
+	public List<ItemResponse> toCollectionResponse (List<Item> itens){
 		return itens.stream()
-				.map(iten -> toResponse(iten))
+				.map(item -> toResponse(item))
 				.collect(Collectors.toList());
 	}
 	
-	public List<Item> toCollectionDomainObject(List<ItemRequest> itens, Orcamento orcamento){		
+	public List<Item> toCollectionDomainObject(List<ItemRequest> itens, Orcamento orcamento){
 		return itens.stream()
 				.map(item -> toDomainObject(item, orcamento))
 				.collect(Collectors.toList());
 	}
-
 }

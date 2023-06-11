@@ -9,17 +9,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ItemRequest(
 		
-		@JsonProperty("quantidade")
 		@NotNull
+		@JsonProperty("quantidade")
 		Integer quantidade,
 		
-		@JsonProperty("valor_unitario")
 		@NotNull
+		@JsonProperty("valor_unitario")
 		BigDecimal valorUnitario,
 		
-		@JsonProperty("produto")
 		@NotNull
 		@Valid
+		@JsonProperty("produto")
 		ProdutoIdRequest produto
 		) {
 

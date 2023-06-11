@@ -23,56 +23,55 @@ import org.edu.unidep.api.dto.response.ProdutoResponse;
 import org.edu.unidep.domain.model.Produto;
 import org.edu.unidep.domain.service.ProdutoService;
 
+
 @Path("/produtos")
 public class ProdutoController {
 
 	@Inject
-    private ProdutoService produtoService;
+	private ProdutoService produtoService;
 	
 	@Inject
-	private ProdutoAssembler produtoOutputAssembler;
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response listarTodos() {
-    	List<Produto> produtos = produtoService.listar();
-    	if(produtos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-        return Response.ok(produtoOutputAssembler.toCollectionResponse(produtos)).build();
-    }
-    
+	private ProdutoAssembler produtoAssembler;
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarTodos() {
+		List<Produto> produtos = produtoService.listar();
+		if(produtos.isEmpty()) return Response.status(Response.Status.NO_CONTENT).build();
+		List<ProdutoResponse> produtosResponse = produtoAssembler.toCollectionResponse(produtos);
+		return Response.ok(produtosResponse).build();
+	}
+	
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ProdutoResponse buscarProduto(
-			@PathParam("id") Long id) {		
+	public Response buscarPorId(@PathParam("id") Long id) {
 		Produto produtoEncontrado = produtoService.buscarPorCodigo(id);
-		ProdutoResponse produtoResponse = produtoOutputAssembler.toResponse(produtoEncontrado);
-		return produtoResponse;		
+		ProdutoResponse produtoResponse = produtoAssembler.toResponse(produtoEncontrado);
+		return Response.ok(produtoResponse).build();
 	}
-
-    @POST
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response salvar(@RequestBody @Valid ProdutoRequest produtoInput) {
-        ProdutoModel produtoModel = ProdutoRequest.toModel(produtoInput);
-        produtoService.salvar(produtoModel);
-        return Response.status(Status.CREATED).build();
-    }
-
+	
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response criar(@RequestBody @Valid ProdutoRequest produtoRequest) {
+		ProdutoModel produtoModel = ProdutoRequest.toModel(produtoRequest);
+		produtoService.criar(produtoModel);
+		return Response.status(Status.CREATED).build();
+	}
+	
 	@PUT
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response atualizar(@PathParam("id") Long id, @RequestBody @Valid ProdutoRequest produtoInput) {
-        Produto produtoAtualizado = produtoService.atualizar(id, ProdutoRequest.toModel(produtoInput));
-        ProdutoResponse produtoResponse = produtoOutputAssembler.toResponse(produtoAtualizado);
-		return Response.ok(produtoResponse).build();
+	public Response atualizar(@PathParam("id") Long id, @RequestBody @Valid ProdutoRequest produtoRequest) {
+		Produto produtoAtualizado = produtoService.atualizar(id, ProdutoRequest.toModel(produtoRequest));
+		return Response.ok(produtoAtualizado).build();
 	}
 	
 	@DELETE
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletar(@PathParam("id") Long id) {
-		produtoService.deletarProduto(id);
-		return Response.noContent().build();
+		produtoService.deletar(id);
+		return Response.status(Status.NO_CONTENT).build();
 	}
-    
 }

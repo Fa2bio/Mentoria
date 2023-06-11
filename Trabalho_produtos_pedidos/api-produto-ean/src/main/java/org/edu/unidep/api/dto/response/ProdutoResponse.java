@@ -12,14 +12,13 @@ public record ProdutoResponse(
 		@JsonProperty("nome")
 		String nome,
 		
-        @JsonProperty("categoria")
-		String categoria,
-	
-        @JsonProperty("codigo_ean")
+		@JsonProperty("categoria")
+		String categoria, 
+		
+		@JsonProperty("codigo_ean")
 		String codigoEan,
 		
-        @JsonProperty("data_validade")
-		LocalDate dataValidade
+		@JsonProperty("data_validade")
+		LocalDate dataValidade		
 		) {
-
 }

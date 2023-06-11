@@ -1,6 +1,5 @@
 package org.edu.unidep.domain.model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
@@ -12,34 +11,32 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "produto")
-public class Produto implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Produto {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_produto")
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo_produto")
+	private Long id;
+	
+	@Column(name = "nome", length = 100, nullable = false)
+	private String nome;
+	
+	@Column(name = "categoria", length = 100, nullable = false)
+	private String categoria;
+	
+	@Column(name = "codigo_ean", length = 13, nullable = false)
+	private String codigoEan;
+	
+	@Column(name = "data_validade", nullable = false)
+	private LocalDate dataValidade;
 
-    @Column(name = "nome", length = 100, nullable = false)
-    private String nome;
+	public Long getId() {
+		return id;
+	}
 
-    @Column(name = "categoria", length = 100, nullable = false)
-    private String categoria;
-
-    @Column(name = "codigo_ean", length = 13, nullable = false)
-    private String codigoEan;
-    
-    @Column(name = "data_validade", nullable = false)
-    private LocalDate dataValidade;
-    
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -57,7 +54,6 @@ public class Produto implements Serializable {
 		this.categoria = categoria;
 	}
 
-	
 	public String getCodigoEan() {
 		return codigoEan;
 	}
@@ -73,9 +69,5 @@ public class Produto implements Serializable {
 	public void setDataValidade(LocalDate dataValidade) {
 		this.dataValidade = dataValidade;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 }

@@ -11,21 +11,21 @@ import org.edu.unidep.domain.model.Orcamento;
 
 @ApplicationScoped
 public class OrcamentoAssembler {
-	
+
 	@Inject
 	private ItemAssembler itemAssembler;
-
+	
 	public OrcamentoResponse toResponse(Orcamento orcamento) {
 		return new OrcamentoResponse(
 				orcamento.getId(),
 				orcamento.getData(),
 				orcamento.getDataValidade(),
 				orcamento.getValor(),
-				itemAssembler.toCollectionResponse(orcamento.getItens())
-		);
+				itemAssembler.toCollectionResponse(orcamento.getItens())				
+				);
 	}
-
-	public List<OrcamentoResponse> toCollectionResponse(List<Orcamento> orcamentos){		
+	
+	public List<OrcamentoResponse> toCollectionResponse(List<Orcamento> orcamentos){
 		return orcamentos.stream()
 				.map(orcamento -> toResponse(orcamento))
 				.collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package org.edu.unidep.infrastrucute.impl;
+package org.edu.unidep.infrastructure.impl;
 
 import java.util.List;
 

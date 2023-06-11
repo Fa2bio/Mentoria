@@ -18,3 +18,4 @@ insert into cliente(nome, email) values ('Maria','Maria@teste.com');
 
 insert into pedido(data_emissao, codigo_cliente, codigo_orcamento) values ('2023-06-10',1,1);
 insert into pedido(data_emissao, codigo_cliente, codigo_orcamento) values ('2023-06-10',2,2);
+

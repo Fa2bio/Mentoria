@@ -1,6 +1,5 @@
 package org.edu.unidep.domain.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -14,22 +13,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "item")
-public class Item implements Serializable{
+public class Item {
 	
-	private static final long serialVersionUID = 1L;
-
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codigo_item")
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "codigo_item")
+	private Long id;
 	
-	@Column(name = "quantidade")
+	@Column(name = "quantidade", nullable = false)
 	private Integer quantidade;
 	
-	@Column(name = "valor_total")
+	@Column(name = "valor_total", nullable = false)
 	private BigDecimal valorTotal;
 	
-	@Column(name = "valor_unitario")
+	@Column(name = "valor_unitario", nullable = false)
 	private BigDecimal valorUnitario;
 	
 	@ManyToOne
@@ -38,21 +35,16 @@ public class Item implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "codigo_orcamento")
 	private Orcamento orcamento;
-	
+
 	public void calcularValorTotal() {
 		BigDecimal valorProduto = this.valorUnitario;
 		Integer qtdProdutos = this.quantidade;
 		
-		if(valorProduto == null) {
-			valorProduto = BigDecimal.ZERO;
-		}
-		
-		if(qtdProdutos == null) {
-			qtdProdutos = 0;
-		}
+		if(valorProduto == null) valorProduto = BigDecimal.ZERO;
+		if(qtdProdutos == null) qtdProdutos = 0;
 		
 		setValorTotal(valorProduto.multiply(new BigDecimal(qtdProdutos)));
-	}	
+	}
 	
 	public Long getId() {
 		return id;
@@ -102,8 +94,4 @@ public class Item implements Serializable{
 		this.orcamento = orcamento;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
 }

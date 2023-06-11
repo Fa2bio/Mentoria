@@ -8,6 +8,7 @@ import org.edu.unidep.api.dto.request.ItemRequest;
 public record OrcamentoModel(
 		LocalDate data,
 		LocalDate dataValidade,
-		List<ItemRequest> itens
+		List<ItemRequest> itens		
 		) {
+
 }
