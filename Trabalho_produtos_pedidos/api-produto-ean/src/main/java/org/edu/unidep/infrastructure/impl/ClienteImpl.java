@@ -3,6 +3,7 @@ package org.edu.unidep.infrastructure.impl;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 
 import org.edu.unidep.domain.model.Cliente;
 import org.edu.unidep.domain.repository.ClienteRepository;
@@ -33,11 +34,13 @@ public class ClienteImpl implements PanacheRepository<Cliente>,
 	}
 
 	@Override
+	@Transactional
 	public void salvar(Cliente cliente) {
 		persist(cliente);		
 	}
 
 	@Override
+	@Transactional
 	public void deletar(Cliente cliente) {
 		delete(cliente);
 		getEntityManager().flush();

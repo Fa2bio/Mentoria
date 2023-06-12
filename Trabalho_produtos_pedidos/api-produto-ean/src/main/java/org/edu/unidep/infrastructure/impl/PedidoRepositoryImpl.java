@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 
 import org.edu.unidep.domain.model.Pedido;
 import org.edu.unidep.domain.repository.PedidoRepository;
@@ -57,6 +58,7 @@ public class PedidoRepositoryImpl implements PanacheRepository<Pedido>,
 	}
 
 	@Override
+	@Transactional
 	public void criar(Pedido pedido) {
 		persist(pedido);		
 	}

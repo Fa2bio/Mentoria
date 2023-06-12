@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 
 import org.edu.unidep.domain.model.Orcamento;
 import org.edu.unidep.domain.repository.OrcamentoRepository;
@@ -70,6 +71,7 @@ OrcamentoRepository{
 	}
 
 	@Override
+	@Transactional
 	public void criar(Orcamento orcamento) {
 		persist(orcamento);		
 	}

@@ -1,3 +1,5 @@
+use api_produto
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[api_produto].[flyway_schema_history]') AND type in (N'U'))
 DROP TABLE [api_produto].[flyway_schema_history]
 GO
