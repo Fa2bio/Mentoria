@@ -6,87 +6,75 @@ import java.time.format.DateTimeFormatter;
 
 public class Data implements Cloneable{
 
-	private int dia;
-	private int mes; 
-	private int ano;
-	private String data;
+	private String dia;
+	private String mes;
 	private String mesExtenso;
+	private String ano;
+	private LocalDate data;
 	
 	public Data(String dia, String mes, String ano) {
 		if(isValido(dia, mes, ano)) {
-			this.dia = Integer.parseInt(dia);
-			this.mes = Integer.parseInt(mes);
-			this.ano = Integer.parseInt(ano);
-		}else isValido("01","01","0001");
-	}
-	
-	public int compara(Data data) {
-		if(this.ano > data.getAno()) return 1;
-		else if(this.ano < data.getAno()) return -1;
-		else {
-			if(this.mes > data.getMes()) return 1;
-			else if(this.mes < data.getMes()) return -1;
-			else {
-				if(this.dia > data.getDia()) return 1;
-				else if(this.dia < data.getDia()) return -1;
-			}
+			this.dia = dia;
+			this.mes = mes;
+			this.ano = ano;
+		}else {
+			isValido("01", "01", "0001");
 		}
-		return 0;
 	}
 	
 	public boolean isBissexto() {
-		if(this.ano%4 == 0) {
-			if(this.ano%100 == 0) return false;
-			return true;
-		}else {
-			if(this.ano%400==0) return true;
-			else return false;
-		}
+		return data.isLeapYear();
+	}
+	
+	public int coparar(Data data) {
+		if(this.data.isEqual(data.getData())) {
+			return 0;
+		}else if(this.data.isAfter(data.getData())) {
+			return 1;
+		}else return -1;
 	}
 	
     @Override
     public Data clone() throws CloneNotSupportedException {
         return (Data) super.clone();
     }
-    
-	private boolean isValido(String dia, String mes, String ano) {
-		if(dia.length() == 2 && mes.length() == 2 && ano.length() == 4) {
-			try {
-				LocalDate dataValida = LocalDate
-						.of(Integer.parseInt(ano),
-							Integer.parseInt(mes),
-							Integer.parseInt(dia));
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-				this.data = formatter.format(dataValida);
-				this.mesExtenso = dataValida.getMonth().toString();
-				return true;
-			} catch (NumberFormatException e) {
-				return false;
-			} catch(DateTimeException e) {
-				return false;
-			}
-			
-		}else return false;
-	}
-
-	public int getDia() {
-		return dia;
-	}
-
-	public int getMes() {
-		return mes;
-	}
-
-	public int getAno() {
-		return ano;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public String getMesExtenso() {
-		return mesExtenso;
-	}	
 	
+	private boolean isValido(String dia, String mes, String ano) {
+		try {
+			LocalDate dataValida = LocalDate
+					.of(Integer.parseInt(ano), Integer.parseInt(mes), Integer.parseInt(dia));
+			this.mesExtenso = dataValida.getMonth().name();
+			this.data = dataValida;
+			return true;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return false;
+		} catch(DateTimeException e) {
+			return false;
+		}		
+	}
+	public String getDia() {
+		return this.dia;
+	}
+	
+	public String getMes() {
+		return this.mes;
+	}
+	
+	public String getMesExtenso() {
+		return this.mesExtenso;
+	}
+	
+	public String getAno() {
+		return this.ano;
+	}
+	
+	public LocalDate getData() {
+		return this.data;
+	}
+	
+	public String getDataFormatada() {
+		DateTimeFormatter formatadorBarra = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return this.data.format(formatadorBarra);
+	}
 }
