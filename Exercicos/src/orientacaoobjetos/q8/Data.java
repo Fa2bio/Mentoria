@@ -23,15 +23,35 @@ public class Data implements Cloneable{
 	}
 	
 	public boolean isBissexto() {
-		return data.isLeapYear();
+		int anoCorrente = Integer.parseInt(this.ano);
+		if(anoCorrente%4 == 0) {
+			if(anoCorrente%100 == 0) return false;
+			return true;
+		}else {
+			if(anoCorrente%400==0) return true;
+			else return false;
+		}
 	}
 	
 	public int coparar(Data data) {
-		if(this.data.isEqual(data.getData())) {
-			return 0;
-		}else if(this.data.isAfter(data.getData())) {
-			return 1;
-		}else return -1;
+		
+		int anoCorrente = Integer.parseInt(this.ano);
+		int anoParamentro = Integer.parseInt(data.getAno());
+		if(anoCorrente > anoParamentro) return 1;
+		else if(anoCorrente < anoParamentro) return -1;
+		else {
+			int mesCorrente = Integer.parseInt(this.mes);
+			int mesParamentro = Integer.parseInt(data.getMes());
+			if(mesCorrente > mesParamentro) return 1;
+			else if(mesCorrente < mesParamentro) return -1;
+			else {
+				int diaCorrente = Integer.parseInt(this.dia);
+				int diaParamentro = Integer.parseInt(data.getDia());
+				if(diaCorrente > diaParamentro) return 1;
+				else if(diaCorrente < diaParamentro) return -1;
+			}
+		}
+		return 0;
 	}
 	
     @Override
