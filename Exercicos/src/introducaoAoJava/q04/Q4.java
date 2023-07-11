@@ -1,4 +1,4 @@
-package introducaoAoJava.q4;
+package introducaoAoJava.q04;
 
 import java.util.Scanner;
 
