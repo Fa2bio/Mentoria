@@ -1,9 +1,0 @@
-Variaveis:
-
-valorCompra - double
-valorPrestacao - double
-numeroPrestacao - int
-
-Metodo:
-
-calcularPrestacao(double valorCompra, double numeroPrestacao)
