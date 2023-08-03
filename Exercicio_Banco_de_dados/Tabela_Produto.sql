@@ -1,9 +1,9 @@
-CREATE TABLE produto(
-	id BIGINT PRIMARY KEY AUTO_INCREMENT,
-	id_nf BIGINT NOT NULL,
-    id_item BIGINT NOT NULL,
-    cod_prod BIGINT NOT NULL,
-    valor_unit DECIMAL(10,2) NOT NULL,
+CREATE TABLE produto_nf(
+	id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_nf BIGINT NOT NULL,
+	id_item BIGINT NOT NULL,
+	cod_prod BIGINT NOT NULL,
+    valor_unit DECIMAL(10,2),
     quantidade BIGINT NOT NULL,
-	desconto BIGINT DEFAULT NULL
+    desconto BIGINT DEFAULT NULL
 );
