@@ -1,6 +1,6 @@
 package orientacaoobjetos.q11;
 
-public class TEste {
+public class Q11 {
 
 	public static void main(String[] args) {
 		IngressoVip ingressoVip = new IngressoVip(100.00, 10.0);
