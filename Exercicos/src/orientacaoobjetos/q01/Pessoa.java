@@ -1,4 +1,4 @@
-package orientacaoobjetos.q1;
+package orientacaoobjetos.q01;
 
 import java.time.LocalDate;
 
