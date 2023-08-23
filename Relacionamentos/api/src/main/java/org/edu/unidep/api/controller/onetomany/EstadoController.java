@@ -14,6 +14,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.edu.unidep.api.dto.assembler.onetomany.EstadoAssembler;
+import org.edu.unidep.api.dto.model.onetomany.request.EstadoRequest;
 import org.edu.unidep.domain.model.onetomany.Estado;
 import org.edu.unidep.domain.repository.onetomany.EstadoRepository;
 import org.edu.unidep.domain.service.onetomany.EstadoService;
@@ -27,11 +29,14 @@ public class EstadoController {
 	@Inject
 	private EstadoService estadoService;
 	
+	@Inject
+	private EstadoAssembler estadoAssembler;
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listarEstados() {
 		List<Estado> todosEstados = estadoRepository.listarEstados();
-		return Response.ok(todosEstados).build();
+		return Response.ok(estadoAssembler.toCollectionResponse(todosEstados)).build();
 	}
 	
 	@GET
@@ -39,12 +44,12 @@ public class EstadoController {
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") Long id) {
 		Estado estado = estadoService.acharOuFalhar(id);
-		return Response.ok(estado).build();
+		return Response.ok(estadoAssembler.toResponse(estado)).build();
 	}
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response salvar(@RequestBody Estado estado) {
-    	estadoService.registrar(estado);
+    public Response salvar(@RequestBody EstadoRequest estadoRequest) {
+    	estadoService.registrar(EstadoRequest.toModel(estadoRequest));
     	return Response.status(Status.CREATED).build();
     }
     
