@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.edu.unidep.api.dto.model.onetomany.request.EstadoModel;
 import org.edu.unidep.domain.exception.onetomany.EstadoNaoEncontradoException;
 import org.edu.unidep.domain.model.onetomany.Estado;
 import org.edu.unidep.domain.repository.onetomany.EstadoRepository;
@@ -15,7 +16,9 @@ public class EstadoService {
 	private EstadoRepository estadoRepository;
 	
 	@Transactional
-	public void registrar(Estado estado) {
+	public void registrar(EstadoModel estadoModel) {
+		Estado estado = new Estado();
+		estado.setNome(estadoModel.nome());
 		estadoRepository.salvar(estado);
 	}
 	
