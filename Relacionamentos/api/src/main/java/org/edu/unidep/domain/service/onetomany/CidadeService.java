@@ -4,6 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.edu.unidep.api.dto.model.onetomany.request.CidadeModel;
 import org.edu.unidep.domain.exception.onetomany.CidadeNaoEncontradoException;
 import org.edu.unidep.domain.model.onetomany.Cidade;
 import org.edu.unidep.domain.model.onetomany.Estado;
@@ -19,8 +20,10 @@ public class CidadeService {
 	private EstadoService estadoService;
 	
 	@Transactional
-	public void registrar(Cidade cidade) {
-		Estado estado = estadoService.acharOuFalhar(cidade.getEstado().getId());
+	public void registrar(CidadeModel cidadeModel) {
+		Cidade cidade = new Cidade();
+		cidade.setNome(cidadeModel.nome());
+		Estado estado = estadoService.acharOuFalhar(cidadeModel.estadoId().id());
 		cidade.setEstado(estado);
 		cidadeRepository.salvar(cidade);
 	}
