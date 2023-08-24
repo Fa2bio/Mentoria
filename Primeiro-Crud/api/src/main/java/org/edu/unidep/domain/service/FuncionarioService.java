@@ -20,10 +20,6 @@ public class FuncionarioService {
 		return funcionarioRepository.listar();
 	}
 	
-	public Funcionario buscarFuncionarioPorId(Long id) {
-		return buscarOuFalhar(id);
-	}
-	
 	@Transactional
 	public void salvarFuncionario(Funcionario Funcionario) {
 		funcionarioRepository.salvar(Funcionario);
