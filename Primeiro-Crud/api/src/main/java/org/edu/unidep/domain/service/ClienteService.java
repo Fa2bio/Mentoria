@@ -20,10 +20,6 @@ public class ClienteService {
 		return clienteRepository.listar();
 	}
 	
-	public Cliente buscarClientePorId(Long id) {
-		return buscarOuFalhar(id);
-	}
-	
 	@Transactional
 	public void salvarCliente(Cliente cliente) {
 		clienteRepository.salvar(cliente);
