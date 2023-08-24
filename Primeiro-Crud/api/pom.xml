@@ -91,17 +91,12 @@
 		<groupId>io.quarkus</groupId>
 		<artifactId>quarkus-jdbc-mysql</artifactId>
 	</dependency>
-	
-	<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+
+	<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
 	<dependency>
-		<groupId>com.google.code.gson</groupId>
-		<artifactId>gson</artifactId>
-	</dependency>
-	
-	<dependency>
-  		<groupId>org.modelmapper</groupId>
-  		<artifactId>modelmapper</artifactId>
-  		<version>3.0.0</version>
+	    <groupId>org.modelmapper</groupId>
+	    <artifactId>modelmapper</artifactId>
+	    <version>3.0.0</version>
 	</dependency>
 	
   </dependencies>
