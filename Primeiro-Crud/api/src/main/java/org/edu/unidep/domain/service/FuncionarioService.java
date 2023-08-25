@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.edu.unidep.api.dto.record.model.FuncionarioModel;
 import org.edu.unidep.domain.exception.FuncionarioNaoEncontradoException;
 import org.edu.unidep.domain.model.Funcionario;
 import org.edu.unidep.domain.repository.FuncionarioRepository;
@@ -21,16 +22,18 @@ public class FuncionarioService {
 	}
 	
 	@Transactional
-	public void salvarFuncionario(Funcionario Funcionario) {
-		funcionarioRepository.salvar(Funcionario);
+	public void salvarFuncionario(FuncionarioModel funcionarioModel) {
+		Funcionario funcionario = new Funcionario();
+		funcionario.setNome(funcionarioModel.nome());
+		funcionario.setCpf(funcionarioModel.cpf());
+		funcionarioRepository.salvar(funcionario);
 	}
 	
 	@Transactional
-	public void atualizarFuncionario(Long funcionarioId, Funcionario funcionarioAtualizado) {
+	public void atualizarFuncionario(Long funcionarioId, FuncionarioModel funcionarioAtualizado) {
 		Funcionario funcionarioEncontrado = buscarOuFalhar(funcionarioId);
-		funcionarioEncontrado.setNome(funcionarioAtualizado.getNome());
-		funcionarioEncontrado.setCpf(funcionarioAtualizado.getCpf());
-		funcionarioEncontrado.setEndereco(funcionarioAtualizado.getEndereco());
+		funcionarioEncontrado.setNome(funcionarioAtualizado.nome());
+		funcionarioEncontrado.setCpf(funcionarioAtualizado.cpf());
 	}
 	
 	@Transactional
