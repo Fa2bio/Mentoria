@@ -15,6 +15,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.edu.unidep.api.dto.record.assembler.FuncionarioAssembler;
+import org.edu.unidep.api.dto.record.model.FuncionarioModel;
+import org.edu.unidep.api.dto.record.request.FuncionarioRequest;
 import org.edu.unidep.domain.model.Funcionario;
 import org.edu.unidep.domain.service.FuncionarioService;
 
@@ -24,6 +27,9 @@ public class FuncionarioController {
 	@Inject
 	private FuncionarioService funcionarioService;
 	
+	@Inject
+	private FuncionarioAssembler funcionarioAssembler;
+	
 	// Obtem dados do servidor
 	@GET
 	@Path("/listar")
@@ -31,7 +37,7 @@ public class FuncionarioController {
 	public Response listarTodos() {
 		List<Funcionario> funcionarios = funcionarioService.listarTodosFuncionarios();
 		if(funcionarios.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		return Response.ok(funcionarios).build();
+		return Response.ok(funcionarioAssembler.toCollectionResponse(funcionarios)).build();
 	}
 	
 	@GET
@@ -39,7 +45,7 @@ public class FuncionarioController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarFuncionario(@PathParam("id") Long id) {
 		Funcionario funcionario = funcionarioService.buscarOuFalhar(id);
-		return Response.ok(funcionario).build();
+		return Response.ok(funcionarioAssembler.toResponse(funcionario)).build();
 	}
 	
 	// Altera dados de uma instancia presente no servidor
@@ -48,8 +54,9 @@ public class FuncionarioController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response atualizarFuncionario(
 			@PathParam("id") Long id,
-			@RequestBody Funcionario funcionarioAtualizado) {
-		funcionarioService.atualizarFuncionario(id, funcionarioAtualizado);
+			@RequestBody FuncionarioRequest funcionarioAtualizado) {
+		FuncionarioModel funcionarioModel = FuncionarioRequest.toModel(funcionarioAtualizado);
+		funcionarioService.atualizarFuncionario(id, funcionarioModel);
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
@@ -57,8 +64,9 @@ public class FuncionarioController {
 	@POST
 	@Path("/registrar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registrar(@RequestBody Funcionario funcionario) {
-		funcionarioService.salvarFuncionario(funcionario);
+	public Response registrar(@RequestBody FuncionarioRequest funcionario) {
+		FuncionarioModel funcionarioModel = FuncionarioRequest.toModel(funcionario);
+		funcionarioService.salvarFuncionario(funcionarioModel);
 		return Response.status(Status.CREATED).build();
 	}
 	
