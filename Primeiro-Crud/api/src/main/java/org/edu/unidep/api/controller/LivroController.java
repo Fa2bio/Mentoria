@@ -15,6 +15,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.edu.unidep.api.dto.record.assembler.LivroAssembler;
+import org.edu.unidep.api.dto.record.model.LivroModel;
+import org.edu.unidep.api.dto.record.request.LivroRequest;
+import org.edu.unidep.api.dto.record.response.LivroResponse;
 import org.edu.unidep.domain.model.Livro;
 import org.edu.unidep.domain.service.LivroService;
 
@@ -24,6 +28,9 @@ public class LivroController {
 	@Inject
 	private LivroService livroService;
 	
+	@Inject
+	private LivroAssembler livroAssembler;
+	
 	// Obtem dados do servidor
 	@GET
 	@Path("/listar")
@@ -31,7 +38,8 @@ public class LivroController {
 	public Response listarTodos() {
 		List<Livro> livros = livroService.listarTodosLivros();
 		if(livros.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		return Response.ok(livros).build();
+		List<LivroResponse> livrosResponse = livroAssembler.toCollectionResponse(livros);
+		return Response.ok(livrosResponse).build();
 	}
 	
 	@GET
@@ -39,7 +47,7 @@ public class LivroController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarLivro(@PathParam("id") Long id) {
 		Livro livro = livroService.buscarOuFalhar(id);
-		return Response.ok(livro).build();
+		return Response.ok(livroAssembler.toResponse(livro)).build();
 	}
 	
 	// Altera dados de uma instancia presente no servidor
@@ -48,8 +56,9 @@ public class LivroController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response atualizarLivro(
 			@PathParam("id") Long id,
-			@RequestBody Livro livroAtualizado) {
-		livroService.atualizarLivro(id, livroAtualizado);
+			@RequestBody LivroRequest livroAtualizado) {
+		LivroModel livroModel = LivroRequest.toModel(livroAtualizado);
+		livroService.atualizarLivro(id, livroModel);
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
@@ -57,8 +66,9 @@ public class LivroController {
 	@POST
 	@Path("/registrar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registrar(@RequestBody Livro livro) {
-		livroService.salvarLivro(livro);
+	public Response registrar(@RequestBody LivroRequest livroRequest) {
+		LivroModel livroModel = LivroRequest.toModel(livroRequest);
+		livroService.salvarLivro(livroModel);
 		return Response.status(Status.CREATED).build();
 	}
 	
