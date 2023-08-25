@@ -6,6 +6,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.edu.unidep.api.dto.record.model.LivroModel;
 import org.edu.unidep.domain.exception.LivroNaoEncontradoException;
 import org.edu.unidep.domain.model.Livro;
 import org.edu.unidep.domain.repository.LivroRepository;
@@ -25,15 +26,16 @@ public class LivroService {
 	}
 	
 	@Transactional
-	public void salvarLivro(Livro Livro) {
-		livroRepository.salvar(Livro);
+	public void salvarLivro(LivroModel livroModel) {
+		Livro livro = new Livro();
+		livro.setIsbn(livroModel.isbn());
+		livroRepository.salvar(livro);
 	}
 	
 	@Transactional
-	public void atualizarLivro(Long livroId, Livro livroAtualizado) {
+	public void atualizarLivro(Long livroId, LivroModel livroAtualizado) {
 		Livro livroEncontrado = buscarOuFalhar(livroId);
-		livroEncontrado.setIsbn(livroAtualizado.getIsbn());
-		livroEncontrado.setVolumeInfo(livroAtualizado.getVolumeInfo());
+		livroEncontrado.setIsbn(livroAtualizado.isbn());
 	}
 	
 	@Transactional
