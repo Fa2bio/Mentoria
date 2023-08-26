@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.edu.unidep.api.dto.record.model.LivroModel;
 import org.edu.unidep.domain.exception.LivroNaoEncontradoException;
 import org.edu.unidep.domain.model.Livro;
+import org.edu.unidep.domain.model.VolumeInfo;
 import org.edu.unidep.domain.repository.LivroRepository;
 
 @ApplicationScoped
@@ -16,6 +17,9 @@ public class LivroService {
 
 	@Inject
 	private LivroRepository livroRepository;
+	
+	@Inject
+	private IsbnService isbnService;
 	
 	public List<Livro> listarTodosLivros(){
 		return livroRepository.listar();
@@ -28,14 +32,16 @@ public class LivroService {
 	@Transactional
 	public void salvarLivro(LivroModel livroModel) {
 		Livro livro = new Livro();
-		livro.setIsbn(livroModel.isbn());
+		VolumeInfo volumeInfo = isbnService.gerarVolumeInfo(livroModel.isbn());
+		livro.setVolumeInfo(volumeInfo);
 		livroRepository.salvar(livro);
 	}
 	
 	@Transactional
 	public void atualizarLivro(Long livroId, LivroModel livroAtualizado) {
 		Livro livroEncontrado = buscarOuFalhar(livroId);
-		livroEncontrado.setIsbn(livroAtualizado.isbn());
+		VolumeInfo volumeInfo = isbnService.gerarVolumeInfo(livroAtualizado.isbn());
+		livroEncontrado.setVolumeInfo(volumeInfo);
 	}
 	
 	@Transactional
