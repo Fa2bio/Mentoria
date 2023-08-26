@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.edu.unidep.api.dto.record.response.ClienteResumoResponse;
 import org.edu.unidep.api.dto.record.response.LivroResponse;
 import org.edu.unidep.api.dto.record.response.VolumeInfoResponse;
 import org.edu.unidep.domain.model.Livro;
@@ -23,14 +24,24 @@ public class LivroAssembler {
 				livro.getVolumeInfo().getDescricao(),
 				livro.getVolumeInfo().getLingua(),
 				livro.getVolumeInfo().getQtdPags(),
+				livro.getVolumeInfo().getIsbn10(),
+				livro.getVolumeInfo().getIsbn13(),
 				livro.getVolumeInfo().getAutores()				
 				);
 		
-		return new LivroResponse(				
-				livro.getIsbn(),
-				volumeInfoResponse,
-				clienteRecordAssembler.toResumoResponse(livro.getCliente())
-				);
+		if(livro.getCliente() != null) {
+			return new LivroResponse(				
+					volumeInfoResponse,
+					clienteRecordAssembler.toResumoResponse(livro.getCliente())
+					);
+		}else {
+			ClienteResumoResponse cliente = new ClienteResumoResponse(null,null);
+			return new LivroResponse(				
+					volumeInfoResponse,
+					cliente
+					);
+		}
+		
 	}
 	
 	public List<LivroResponse> toCollectionResponse(List<Livro> livros){
