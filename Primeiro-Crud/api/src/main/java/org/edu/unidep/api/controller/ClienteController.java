@@ -58,7 +58,7 @@ public class ClienteController {
 			@PathParam("id") Long id,
 			@RequestBody ClienteInputModel clienteInput) {		
 		Cliente clienteAtualizado = clienteAssembler.toDomainObject(clienteInput);
-		clienteService.atualizarCliente(id, clienteAtualizado);
+		clienteService.atualizarCliente(id, clienteAtualizado, clienteInput.getCep());
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
@@ -68,7 +68,7 @@ public class ClienteController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registrar(@RequestBody ClienteInputModel clienteInput) {
 		Cliente cliente = clienteAssembler.toDomainObject(clienteInput);
-		clienteService.salvarCliente(cliente);
+		clienteService.salvarCliente(cliente, clienteInput.getCep());
 		return Response.status(Status.CREATED).build();
 	}
 	
