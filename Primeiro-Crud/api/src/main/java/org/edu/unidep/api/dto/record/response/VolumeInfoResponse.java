@@ -21,6 +21,12 @@ public record VolumeInfoResponse(
 		@JsonProperty("qtdPags")
 		Long qtdPags,
 		
+		@JsonProperty("isbn10")
+		String isbn10,
+		
+		@JsonProperty("isbn13")
+		String isbn13,
+		
 		@JsonProperty("autores")
 		List<String> autores
 		) {
