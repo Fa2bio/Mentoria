@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record LivroResponse(
 		
-		@JsonProperty("isbn")
-		String isbn,
-		
 		@JsonProperty("volumeInfo")
 		VolumeInfoResponse volumeInfo,	
 		
