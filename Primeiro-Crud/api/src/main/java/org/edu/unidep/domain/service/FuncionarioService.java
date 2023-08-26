@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.edu.unidep.api.dto.record.model.FuncionarioModel;
 import org.edu.unidep.domain.exception.FuncionarioNaoEncontradoException;
+import org.edu.unidep.domain.model.Endereco;
 import org.edu.unidep.domain.model.Funcionario;
 import org.edu.unidep.domain.repository.FuncionarioRepository;
 
@@ -17,23 +18,30 @@ public class FuncionarioService {
 	@Inject
 	private FuncionarioRepository funcionarioRepository;
 	
+	@Inject
+	private EnderecoService enderecoService;
+	
 	public List<Funcionario> listarTodosFuncionarios(){
 		return funcionarioRepository.listar();
 	}
 	
 	@Transactional
 	public void salvarFuncionario(FuncionarioModel funcionarioModel) {
+		Endereco endereco = enderecoService.enderecoViaCep(funcionarioModel.cep());
 		Funcionario funcionario = new Funcionario();
 		funcionario.setNome(funcionarioModel.nome());
 		funcionario.setCpf(funcionarioModel.cpf());
+		funcionario.setEndereco(endereco);
 		funcionarioRepository.salvar(funcionario);
 	}
 	
 	@Transactional
 	public void atualizarFuncionario(Long funcionarioId, FuncionarioModel funcionarioAtualizado) {
+		Endereco endereco = enderecoService.enderecoViaCep(funcionarioAtualizado.cep());
 		Funcionario funcionarioEncontrado = buscarOuFalhar(funcionarioId);
 		funcionarioEncontrado.setNome(funcionarioAtualizado.nome());
 		funcionarioEncontrado.setCpf(funcionarioAtualizado.cpf());
+		funcionarioEncontrado.setEndereco(endereco);
 	}
 	
 	@Transactional
