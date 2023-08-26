@@ -19,9 +19,6 @@ public class Livro {
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "isbn", length = 13, nullable = false)
-	private String isbn;
-	
 	@Embedded
 	private VolumeInfo volumeInfo;
 
@@ -35,14 +32,6 @@ public class Livro {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getIsbn() {
-		return isbn;
-	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
 	}
 
 	public VolumeInfo getVolumeInfo() {
