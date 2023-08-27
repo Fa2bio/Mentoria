@@ -1,12 +1,17 @@
 package org.edu.unidep.domain.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
 import org.edu.unidep.api.dto.record.model.LivroModel;
+import org.edu.unidep.api.dto.record.request.LivroRequest;
 import org.edu.unidep.domain.exception.LivroNaoEncontradoException;
 import org.edu.unidep.domain.model.Livro;
 import org.edu.unidep.domain.model.VolumeInfo;
@@ -20,6 +25,15 @@ public class LivroService {
 	
 	@Inject
 	private IsbnService isbnService;
+	
+	@Inject
+	private Validator validator;
+	
+	public void validarLivroRequest(LivroRequest livroRequest) {
+		Set<ConstraintViolation<LivroRequest>> constraintViolations = validator.validate(livroRequest);
+		if(constraintViolations.isEmpty()) return;
+		else throw new ConstraintViolationException(constraintViolations);
+	}
 	
 	public List<Livro> listarTodosLivros(){
 		return livroRepository.listar();
