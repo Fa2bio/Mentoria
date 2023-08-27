@@ -1,6 +1,6 @@
 package org.edu.unidep.domain.exception;
 
-public class IsbnInvalidoException extends RuntimeException{
+public class IsbnInvalidoException extends EntidadeInvalidaException{
 
 	private static final long serialVersionUID = 1L;
 
