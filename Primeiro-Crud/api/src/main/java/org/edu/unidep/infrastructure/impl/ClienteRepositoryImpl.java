@@ -34,7 +34,8 @@ PanacheRepository<Cliente>{
 	@Override
 	@Transactional
 	public void deletar(Cliente cliente) {
-		delete(cliente);		
+		delete(cliente);
+		getEntityManager().flush();
 	}
 
 }
