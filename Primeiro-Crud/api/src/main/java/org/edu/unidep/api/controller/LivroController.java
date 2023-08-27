@@ -3,6 +3,7 @@ package org.edu.unidep.api.controller;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -57,6 +58,8 @@ public class LivroController {
 	public Response atualizarLivro(
 			@PathParam("id") Long id,
 			@RequestBody LivroRequest livroAtualizado) {
+		
+		livroService.validarLivroRequest(livroAtualizado);
 		LivroModel livroModel = LivroRequest.toModel(livroAtualizado);
 		livroService.atualizarLivro(id, livroModel);
 		return Response.status(Status.NO_CONTENT).build();
@@ -67,6 +70,8 @@ public class LivroController {
 	@Path("/registrar")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registrar(@RequestBody LivroRequest livroRequest) {
+		
+		livroService.validarLivroRequest(livroRequest);
 		LivroModel livroModel = LivroRequest.toModel(livroRequest);
 		livroService.salvarLivro(livroModel);
 		return Response.status(Status.CREATED).build();
