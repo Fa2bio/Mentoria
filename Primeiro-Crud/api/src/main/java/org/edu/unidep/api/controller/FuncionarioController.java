@@ -55,6 +55,7 @@ public class FuncionarioController {
 	public Response atualizarFuncionario(
 			@PathParam("id") Long id,
 			@RequestBody FuncionarioRequest funcionarioAtualizado) {
+		funcionarioService.validarFuncionarioRequest(funcionarioAtualizado);
 		FuncionarioModel funcionarioModel = FuncionarioRequest.toModel(funcionarioAtualizado);
 		funcionarioService.atualizarFuncionario(id, funcionarioModel);
 		return Response.status(Status.NO_CONTENT).build();
@@ -65,6 +66,7 @@ public class FuncionarioController {
 	@Path("/registrar")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registrar(@RequestBody FuncionarioRequest funcionario) {
+		funcionarioService.validarFuncionarioRequest(funcionario);
 		FuncionarioModel funcionarioModel = FuncionarioRequest.toModel(funcionario);
 		funcionarioService.salvarFuncionario(funcionarioModel);
 		return Response.status(Status.CREATED).build();
