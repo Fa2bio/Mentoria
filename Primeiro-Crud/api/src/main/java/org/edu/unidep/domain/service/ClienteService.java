@@ -1,11 +1,18 @@
 package org.edu.unidep.domain.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
+import org.edu.unidep.api.dto.modelmapper.model.ClienteInputModel;
+import org.edu.unidep.domain.exception.ClienteEmUsoException;
 import org.edu.unidep.domain.exception.ClienteNaoEncontradoException;
 import org.edu.unidep.domain.model.Cliente;
 import org.edu.unidep.domain.model.Endereco;
@@ -20,8 +27,17 @@ public class ClienteService {
 	@Inject
 	private EnderecoService enderecoService;
 	
+	@Inject
+	private Validator validator;
+	
 	public List<Cliente> listarTodosClientes(){
 		return clienteRepository.listar();
+	}
+	
+	public void validarClienteRequest(ClienteInputModel clienteInput) {
+		Set<ConstraintViolation<ClienteInputModel>> constraintViolations = validator.validate(clienteInput);
+		if(constraintViolations.isEmpty()) return;
+		else throw new ConstraintViolationException(constraintViolations);
 	}
 	
 	@Transactional
@@ -42,8 +58,12 @@ public class ClienteService {
 	
 	@Transactional
 	public void excluirCliente(Long id) {
-		Cliente clienteEncontrado = buscarOuFalhar(id);
-		clienteRepository.deletar(clienteEncontrado);
+		try {
+			Cliente clienteEncontrado = buscarOuFalhar(id);
+			clienteRepository.deletar(clienteEncontrado);
+		} catch (PersistenceException e) {
+			throw new ClienteEmUsoException(id);
+		}
 	}
 	
 	public Cliente buscarOuFalhar(Long id) {
