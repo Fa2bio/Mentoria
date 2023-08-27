@@ -1,9 +1,30 @@
 package org.edu.unidep.api.dto.modelmapper.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.br.CPF;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ClienteInputModel {
 
+	@JsonProperty("nome")
+	@NotNull
+	@NotBlank
 	private String nome;
+	
+	@JsonProperty("cpf")
+	@NotNull
+	@NotBlank
+	@CPF
 	private String cpf;
+	
+	@JsonProperty("cep")
+	@NotNull
+	@NotBlank
+	@Size(min = 8, max = 9)
 	private String cep;
 	
 	public String getNome() {
