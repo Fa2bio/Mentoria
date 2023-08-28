@@ -14,6 +14,7 @@ import javax.validation.Validator;
 import org.edu.unidep.api.dto.modelmapper.model.ClienteInputModel;
 import org.edu.unidep.domain.exception.ClienteEmUsoException;
 import org.edu.unidep.domain.exception.ClienteNaoEncontradoException;
+import org.edu.unidep.domain.exception.CpfEmUsoException;
 import org.edu.unidep.domain.model.Cliente;
 import org.edu.unidep.domain.model.Endereco;
 import org.edu.unidep.domain.repository.ClienteRepository;
@@ -30,9 +31,6 @@ public class ClienteService {
 	@Inject
 	private Validator validator;
 	
-	public List<Cliente> listarTodosClientes(){
-		return clienteRepository.listar();
-	}
 	
 	public void validarClienteRequest(ClienteInputModel clienteInput) {
 		Set<ConstraintViolation<ClienteInputModel>> constraintViolations = validator.validate(clienteInput);
@@ -40,11 +38,19 @@ public class ClienteService {
 		else throw new ConstraintViolationException(constraintViolations);
 	}
 	
+	public List<Cliente> listarTodosClientes(){
+		return clienteRepository.listar();
+	}
+	
 	@Transactional
 	public void salvarCliente(Cliente cliente, String cep) {
-		Endereco endereco = enderecoService.enderecoViaCep(cep);
-		cliente.setEndereco(endereco);
-		clienteRepository.salvar(cliente);
+		try {
+			Endereco endereco = enderecoService.enderecoViaCep(cep);
+			cliente.setEndereco(endereco);
+			clienteRepository.salvar(cliente);
+		} catch (PersistenceException e) {
+			throw new CpfEmUsoException(cliente.getCpf());
+		}
 	}
 	
 	@Transactional
