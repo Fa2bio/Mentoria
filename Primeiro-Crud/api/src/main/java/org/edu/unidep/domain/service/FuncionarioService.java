@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -12,6 +13,7 @@ import javax.validation.Validator;
 
 import org.edu.unidep.api.dto.record.model.FuncionarioModel;
 import org.edu.unidep.api.dto.record.request.FuncionarioRequest;
+import org.edu.unidep.domain.exception.CpfEmUsoException;
 import org.edu.unidep.domain.exception.FuncionarioNaoEncontradoException;
 import org.edu.unidep.domain.model.Endereco;
 import org.edu.unidep.domain.model.Funcionario;
@@ -41,12 +43,16 @@ public class FuncionarioService {
 	
 	@Transactional
 	public void salvarFuncionario(FuncionarioModel funcionarioModel) {
-		Endereco endereco = enderecoService.enderecoViaCep(funcionarioModel.cep());
-		Funcionario funcionario = new Funcionario();
-		funcionario.setNome(funcionarioModel.nome());
-		funcionario.setCpf(funcionarioModel.cpf());
-		funcionario.setEndereco(endereco);
-		funcionarioRepository.salvar(funcionario);
+		try {
+			Endereco endereco = enderecoService.enderecoViaCep(funcionarioModel.cep());
+			Funcionario funcionario = new Funcionario();
+			funcionario.setNome(funcionarioModel.nome());
+			funcionario.setCpf(funcionarioModel.cpf());
+			funcionario.setEndereco(endereco);
+			funcionarioRepository.salvar(funcionario);
+		} catch (PersistenceException e) {
+			throw new CpfEmUsoException(funcionarioModel.cpf());
+		}
 	}
 	
 	@Transactional
