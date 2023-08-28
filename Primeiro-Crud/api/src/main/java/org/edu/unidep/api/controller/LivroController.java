@@ -3,7 +3,6 @@ package org.edu.unidep.api.controller;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.validation.Valid;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
