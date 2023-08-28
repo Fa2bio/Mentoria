@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,6 +38,9 @@ public class Funcionario {
 		joinColumns = @JoinColumn(name = "funcionario_id"),
 		inverseJoinColumns = @JoinColumn(name = "cliente_id"))
 	private List<Cliente> clientes = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "funcionario")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -76,6 +80,14 @@ public class Funcionario {
 
 	public void setClientes(List<Cliente> clientes) {
 		this.clientes = clientes;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 }
