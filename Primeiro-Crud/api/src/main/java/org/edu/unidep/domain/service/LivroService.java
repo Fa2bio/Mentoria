@@ -39,10 +39,6 @@ public class LivroService {
 		return livroRepository.listar();
 	}
 	
-	public Livro buscarLivroPorId(Long id) {
-		return buscarOuFalhar(id);
-	}
-	
 	@Transactional
 	public void salvarLivro(LivroModel livroModel) {
 		Livro livro = new Livro();
