@@ -36,6 +36,14 @@ public class Cliente {
 	
 	@ManyToMany(mappedBy = "clientes")
 	private List<Funcionario> funcionarios = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+	
+	public void addFuncionario(Funcionario funcionario) {
+		funcionarios.add(funcionario);
+		funcionario.getClientes().add(this);
+	}
 		
 	public Long getId() {
 		return id;
@@ -66,6 +74,12 @@ public class Cliente {
 	}
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
+	}
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 	public Endereco getEndereco() {
 		return endereco;
