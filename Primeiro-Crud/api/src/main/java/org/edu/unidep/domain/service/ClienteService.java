@@ -11,7 +11,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
-import org.edu.unidep.api.dto.modelmapper.model.ClienteInputModel;
+import org.edu.unidep.api.dto.modelmapper.request.ClienteRequest;
 import org.edu.unidep.domain.exception.ClienteEmUsoException;
 import org.edu.unidep.domain.exception.ClienteNaoEncontradoException;
 import org.edu.unidep.domain.exception.CpfEmUsoException;
@@ -32,8 +32,8 @@ public class ClienteService {
 	private Validator validator;
 	
 	
-	public void validarClienteRequest(ClienteInputModel clienteInput) {
-		Set<ConstraintViolation<ClienteInputModel>> constraintViolations = validator.validate(clienteInput);
+	public void validarClienteRequest(ClienteRequest clienteInput) {
+		Set<ConstraintViolation<ClienteRequest>> constraintViolations = validator.validate(clienteInput);
 		if(constraintViolations.isEmpty()) return;
 		else throw new ConstraintViolationException(constraintViolations);
 	}
