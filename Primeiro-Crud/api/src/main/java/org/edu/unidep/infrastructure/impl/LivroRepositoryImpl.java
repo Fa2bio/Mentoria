@@ -25,6 +25,30 @@ PanacheRepository<Livro>{
 	public Optional<Livro> buscarPorId(Long id) {
 		return findByIdOptional(id);
 	}
+	
+	@Override
+	public Optional<Livro> buscarLivroPorIsbn10(String isbn) {
+		String jpql = """
+				SELECT l FROM Livro l WHERE l.volumeInfo.isbn10 = :isbn
+				""";
+		return getEntityManager()
+				.createQuery(jpql, Livro.class)
+				.setParameter("isbn", isbn)
+				.getResultStream()
+				.findFirst();
+	}
+
+	@Override
+	public Optional<Livro> buscarLivroPorIsbn13(String isbn) {
+		String jpql = """
+				SELECT l FROM Livro l WHERE l.volumeInfo.isbn13 = :isbn
+				""";
+		return getEntityManager()
+				.createQuery(jpql, Livro.class)
+				.setParameter("isbn", isbn)
+				.getResultStream()
+				.findFirst();
+	}
 
 	@Override
 	@Transactional
@@ -37,5 +61,4 @@ PanacheRepository<Livro>{
 	public void deletar(Livro livro) {
 		delete(livro);		
 	}
-
 }
