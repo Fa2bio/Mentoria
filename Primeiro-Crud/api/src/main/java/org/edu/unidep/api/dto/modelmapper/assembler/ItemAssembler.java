@@ -24,7 +24,7 @@ public class ItemAssembler {
 	
 	public Item toModel(ItemRequest itemRequest, Pedido pedido){
 		Item item = modelMapper.map(itemRequest, Item.class);
-		Livro livro = livroService.buscarOuFalhar(itemRequest.getLivro_id());
+		Livro livro = livroService.buscarOuFalhar(itemRequest.getLivroId());
 		livro.setCliente(pedido.getCliente());
 		
 		item.setId(null);
