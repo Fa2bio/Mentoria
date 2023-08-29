@@ -50,6 +50,14 @@ public class LivroController {
 		return Response.ok(livroAssembler.toResponse(livro)).build();
 	}
 	
+	@GET
+	@Path("/buscarporisbn/{isbn}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarLivroPorIsbn(@PathParam("isbn") String isbn) {
+		Livro livro = livroService.buscarPorIsbn(isbn);
+		return Response.ok(livroAssembler.toResponse(livro)).build();
+	}
+	
 	// Altera dados de uma instancia presente no servidor
 	@PUT	
 	@Path("/atualizar/{id}")
