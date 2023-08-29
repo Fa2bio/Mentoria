@@ -7,5 +7,9 @@ public class LivroNaoEncontradoException extends EntidadeNaoEncontradaException{
 	public LivroNaoEncontradoException(Long id) {
 		super(String.format("Não foi possível encontrar o livro de id %d", id));
 	}
+	
+	public LivroNaoEncontradoException(String isbn) {
+		super(String.format("Não foi possível encontrar o livro de isbn %s", isbn));
+	}
 
 }
