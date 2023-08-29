@@ -16,8 +16,8 @@ import javax.ws.rs.core.Response.Status;
 
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.edu.unidep.api.dto.modelmapper.assembler.ClienteAssembler;
-import org.edu.unidep.api.dto.modelmapper.model.ClienteInputModel;
-import org.edu.unidep.api.dto.modelmapper.model.ClienteModel;
+import org.edu.unidep.api.dto.modelmapper.request.ClienteRequest;
+import org.edu.unidep.api.dto.modelmapper.response.ClienteResponse;
 import org.edu.unidep.domain.model.Cliente;
 import org.edu.unidep.domain.service.ClienteService;
 
@@ -37,7 +37,7 @@ public class ClienteController {
 	public Response listarTodos() {
 		List<Cliente> clientes = clienteService.listarTodosClientes();
 		if(clientes.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<ClienteModel> clienteResponse = clienteAssembler.toCollectionModel(clientes);
+		List<ClienteResponse> clienteResponse = clienteAssembler.toCollectionModel(clientes);
 		return Response.ok(clienteResponse).build();
 	}
 	
@@ -46,7 +46,7 @@ public class ClienteController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarCliente(@PathParam("id") Long id) {
 		Cliente cliente = clienteService.buscarOuFalhar(id);
-		ClienteModel clienteResponse = clienteAssembler.toModel(cliente);
+		ClienteResponse clienteResponse = clienteAssembler.toModel(cliente);
 		return Response.ok(clienteResponse).build();
 	}
 	
@@ -56,7 +56,7 @@ public class ClienteController {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response atualizarCliente(
 			@PathParam("id") Long id,
-			@RequestBody ClienteInputModel clienteInput) {
+			@RequestBody ClienteRequest clienteInput) {
 		clienteService.validarClienteRequest(clienteInput);
 		Cliente clienteAtualizado = clienteAssembler.toDomainObject(clienteInput);
 		clienteService.atualizarCliente(id, clienteAtualizado, clienteInput.getCep());
@@ -67,7 +67,7 @@ public class ClienteController {
 	@POST
 	@Path("/registrar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registrar(@RequestBody ClienteInputModel clienteInput) {
+	public Response registrar(@RequestBody ClienteRequest clienteInput) {
 		clienteService.validarClienteRequest(clienteInput);
 		Cliente cliente = clienteAssembler.toDomainObject(clienteInput);
 		clienteService.salvarCliente(cliente, clienteInput.getCep());
