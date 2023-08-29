@@ -39,6 +39,18 @@ public class LivroService {
 		return livroRepository.listar();
 	}
 	
+	public Livro buscarPorIsbn(String isbn) {
+		String s = isbnService.isbnValidator(isbn);
+		
+		if(isbn.length()==13) {
+			return livroRepository.buscarLivroPorIsbn13(s)
+					.orElseThrow(() -> new LivroNaoEncontradoException(s));
+			
+		}
+		return livroRepository.buscarLivroPorIsbn10(s)
+				.orElseThrow(() -> new LivroNaoEncontradoException(s));
+	}
+	
 	@Transactional
 	public void salvarLivro(LivroModel livroModel) {
 		Livro livro = new Livro();

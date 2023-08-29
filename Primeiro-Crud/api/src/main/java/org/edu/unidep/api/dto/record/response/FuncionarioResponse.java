@@ -2,6 +2,8 @@ package org.edu.unidep.api.dto.record.response;
 
 import java.util.List;
 
+import org.edu.unidep.api.dto.modelmapper.response.PedidoResumoResponse;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record FuncionarioResponse(
@@ -16,7 +18,10 @@ public record FuncionarioResponse(
 		EnderecoResponse endereco,
 		
 		@JsonProperty("cliente")
-		List<ClienteResumoResponse> clientes
+		List<ClienteResumoResponse> clientes,
+		
+		@JsonProperty("pedido")
+		List<PedidoResumoResponse> pedidos
 		
 		) {
 

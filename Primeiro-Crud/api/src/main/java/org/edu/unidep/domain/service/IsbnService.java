@@ -75,15 +75,15 @@ public class IsbnService {
 		return volumeInfo;
 	}
 	
-	private boolean isbnValidator(String isbn) {
+	public String isbnValidator(String isbn) {
 		if(isbn.contains("-")) {
 			if(isbn.length()==14) {
-				isbn.replace("-", "");
-				return true;
+				isbn = isbn.replace("-", "");
+				return isbn;
 			}else {
 				throw new IsbnInvalidoException("Isbn deve ser do tipo isbn-10 ou isbn-13");
 			}
-		}else if((isbn.length() == 10) || (isbn.length() == 13)) return true;
+		}else if((isbn.length() == 10) || (isbn.length() == 13)) return isbn;
 		else throw new IsbnInvalidoException("Isbn deve ser do tipo isbn-10 ou isbn-13");
 	}
 }

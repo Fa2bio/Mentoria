@@ -2,11 +2,20 @@ package org.edu.unidep.api.dto.modelmapper.response;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ItemResumoResponse {
 
+	@JsonProperty("quantidade")
 	private Integer quantidade;
+	
+	@JsonProperty("valorTotal")
 	private BigDecimal valorTotal;
+	
+	@JsonProperty("valorUnitario")
 	private BigDecimal valorUnitario;
+	
+	@JsonProperty("livro")
 	private LivroResumoResponse livro;
 	
 	public Integer getQuantidade() {

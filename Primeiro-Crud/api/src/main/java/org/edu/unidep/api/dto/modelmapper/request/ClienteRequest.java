@@ -1,4 +1,4 @@
-package org.edu.unidep.api.dto.modelmapper.model;
+package org.edu.unidep.api.dto.modelmapper.request;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ClienteInputModel {
+public class ClienteRequest {
 
 	@JsonProperty("nome")
 	@NotNull

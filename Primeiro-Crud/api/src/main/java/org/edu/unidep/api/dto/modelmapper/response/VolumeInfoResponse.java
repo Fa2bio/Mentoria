@@ -1,20 +1,28 @@
-package org.edu.unidep.api.dto.modelmapper.model;
+package org.edu.unidep.api.dto.modelmapper.response;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class VolumeInfoModel {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class VolumeInfoResponse {
+
+	@JsonProperty("titulo")
 	private String titulo;
 
+	@JsonProperty("dataPublicacao")
 	private String dataPublicacao;
 
+	@JsonProperty("descricao")
 	private String descricao;
 
+	@JsonProperty("lingua")
 	private String lingua;
 
+	@JsonProperty("qtdPags")
 	private Long qtdPags;
 
+	@JsonProperty("autores")
 	private List<String> autores = new ArrayList<>();
 
 	public String getTitulo() {

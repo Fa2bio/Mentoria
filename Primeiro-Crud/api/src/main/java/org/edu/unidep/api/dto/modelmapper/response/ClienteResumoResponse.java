@@ -1,8 +1,13 @@
 package org.edu.unidep.api.dto.modelmapper.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ClienteResumoResponse {
 
+	@JsonProperty("nome")
 	private String nome;
+	
+	@JsonProperty("cpf")
 	private String cpf;
 	
 	public String getNome() {

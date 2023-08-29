@@ -6,9 +6,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PedidoResponse {
+public class PedidoResumoResponse {
 
-	@JsonProperty("uuidCode")
+	@JsonProperty("codigoPedido")
 	private String uuidCode;
 
 	@JsonProperty("dataEmissao")
@@ -16,12 +16,6 @@ public class PedidoResponse {
 	
 	@JsonProperty("valor")
 	private BigDecimal valor;
-	
-	@JsonProperty("cliente")
-	private ClienteResumoResponse cliente;
-	
-	@JsonProperty("funcionario")
-	private FuncionarioResumoResponse funcionario;
 	
 	@JsonProperty("itens")
 	private List<ItemResumoResponse> itens;
@@ -50,22 +44,6 @@ public class PedidoResponse {
 		this.valor = valor;
 	}
 
-	public ClienteResumoResponse getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(ClienteResumoResponse cliente) {
-		this.cliente = cliente;
-	}
-
-	public FuncionarioResumoResponse getFuncionario() {
-		return funcionario;
-	}
-
-	public void setFuncionario(FuncionarioResumoResponse funcionario) {
-		this.funcionario = funcionario;
-	}
-
 	public List<ItemResumoResponse> getItens() {
 		return itens;
 	}
@@ -73,5 +51,5 @@ public class PedidoResponse {
 	public void setItens(List<ItemResumoResponse> itens) {
 		this.itens = itens;
 	}
-
+	
 }

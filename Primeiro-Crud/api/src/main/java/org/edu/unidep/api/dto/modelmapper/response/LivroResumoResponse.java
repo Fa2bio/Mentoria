@@ -1,15 +1,16 @@
 package org.edu.unidep.api.dto.modelmapper.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LivroResumoResponse {
+	
+	@JsonProperty("volumeInfo")
+	private VolumeInfoResumoResponse volumeInfo;
 
-	private String isbn;
-
-	public String getIsbn() {
-		return isbn;
+	public VolumeInfoResumoResponse getVolumeInfo() {
+		return volumeInfo;
 	}
-
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
+	public void setVolumeInfo(VolumeInfoResumoResponse volumeInfo) {
+		this.volumeInfo = volumeInfo;
 	}
-
 }

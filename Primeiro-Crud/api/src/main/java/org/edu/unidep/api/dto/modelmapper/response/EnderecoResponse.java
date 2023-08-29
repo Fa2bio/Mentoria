@@ -1,15 +1,22 @@
-package org.edu.unidep.api.dto.modelmapper.model;
+package org.edu.unidep.api.dto.modelmapper.response;
 
-public class EnderecoModel {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public class EnderecoResponse {
+
+	@JsonProperty("cep")
 	private String cep;
 	
+	@JsonProperty("bairro")
 	private String bairro;
 	
+	@JsonProperty("localidade")
 	private String localidade;
 	
+	@JsonProperty("logradouro")
 	private String logradouro;
 
+	@JsonProperty("complemento")
 	private String complemento;
 
 	public String getCep() {

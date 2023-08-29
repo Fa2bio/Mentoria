@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import org.edu.unidep.api.dto.modelmapper.assembler.PedidoAssembler;
 import org.edu.unidep.api.dto.record.response.EnderecoResponse;
 import org.edu.unidep.api.dto.record.response.FuncionarioResponse;
 import org.edu.unidep.domain.model.Funcionario;
@@ -15,6 +16,9 @@ public class FuncionarioAssembler {
 
 	@Inject
 	private ClienteRecordAssembler clienteRecordAssembler;
+	
+	@Inject
+	private PedidoAssembler pedidoAssembler;
 	
 	public FuncionarioResponse toResponse(Funcionario funcionario) {
 		
@@ -30,7 +34,8 @@ public class FuncionarioAssembler {
 				funcionario.getNome(),
 				funcionario.getCpf(),
 				enderecoResponse,
-				clienteRecordAssembler.toCollectionResumoResponse(funcionario.getClientes())
+				clienteRecordAssembler.toCollectionResumoResponse(funcionario.getClientes()),
+				pedidoAssembler.toCollectionResumoResponse(funcionario.getPedidos())
 				);
 	}
 	

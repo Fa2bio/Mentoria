@@ -4,16 +4,21 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ItemRequest {
 
 	@NotNull
+	@JsonProperty("quantidade")
 	private Integer quantidade;
 	
 	@NotNull
+	@JsonProperty("valorUnitario")
 	private BigDecimal valorUnitario;
 	
 	@NotNull
-	private Long livro_id;
+	@JsonProperty("livroId")
+	private Long livroId;
 	
 	public Integer getQuantidade() {
 		return quantidade;
@@ -27,10 +32,10 @@ public class ItemRequest {
 	public void setValorUnitario(BigDecimal valorUnitario) {
 		this.valorUnitario = valorUnitario;
 	}
-	public Long getLivro_id() {
-		return livro_id;
+	public Long getLivroId() {
+		return livroId;
 	}
-	public void setLivro_id(Long livro_id) {
-		this.livro_id = livro_id;
+	public void setLivroId(Long livroId) {
+		this.livroId = livroId;
 	}
 }

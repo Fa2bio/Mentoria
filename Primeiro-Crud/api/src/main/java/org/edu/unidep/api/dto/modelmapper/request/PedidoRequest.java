@@ -6,19 +6,25 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PedidoRequest {
 
 	@NotNull
+	@JsonProperty("dataEmissao")
 	private LocalDate dataEmissao;
 	
 	@NotNull
+	@JsonProperty("clienteId")
 	private Long clienteId;
 	
 	@NotNull
+	@JsonProperty("funcionarioId")
 	private Long funcionarioId;
 	
 	@NotNull
 	@Valid
+	@JsonProperty("itens")
 	private List<ItemRequest> itens;
 
 	public LocalDate getDataEmissao() {
