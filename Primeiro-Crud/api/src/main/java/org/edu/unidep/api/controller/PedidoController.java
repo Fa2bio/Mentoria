@@ -20,7 +20,7 @@ import org.edu.unidep.api.dto.modelmapper.response.PedidoResponse;
 import org.edu.unidep.domain.model.Pedido;
 import org.edu.unidep.domain.service.PedidoService;
 
-@Path("/pedido")
+@Path("/pedidos")
 public class PedidoController {
 
 	@Inject
