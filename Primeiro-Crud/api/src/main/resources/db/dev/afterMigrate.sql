@@ -35,15 +35,49 @@ INSERT INTO cliente_funcionario(id, funcionario_id, cliente_id) VALUES(2,1,2);
 INSERT INTO cliente_funcionario(id, funcionario_id, cliente_id) VALUES(3,2,1);
 
 INSERT INTO livro(id, isbn_10, isbn_13, titulo,data_publicacao, descricao, lingua, qtdPags, cliente_id) 
-VALUES(1,"8535914846","0000000000000","1984","21-06-2009","Winston, herói de 1984, último romance de George Orwell","pt-BR", 400,1);
+VALUES(1,"8535914846","9786587034201","1984","21-06-2009","Winston, herói de 1984, último romance de George Orwell","pt-BR", 400,1);
 
 INSERT INTO livro(id, isbn_10, isbn_13, titulo,data_publicacao, descricao, lingua, qtdPags, cliente_id) 
-VALUES(2,"8535909559","0000000000000","Fazenda Dos Animais","18-05-2009","Depois das profundas transformações políticas que mudaram a fisionomia do planeta nas últimas décadas","pt-BR", 200,2);
+VALUES(2,"8535909559","9786587034102","Fazenda Dos Animais","18-05-2009","Depois das profundas transformações políticas que mudaram a fisionomia do planeta nas últimas décadas","pt-BR", 200,2);
 
 INSERT INTO livro(id, isbn_10, isbn_13, titulo,data_publicacao, descricao, lingua, qtdPags, cliente_id) 
-VALUES(3,"8594318596","0000000000000","Arte da Guerra","10-09-2005	","A guerra é um assunto de importância vital para o Estado; o reino da vida ou da morte; o caminho para a sobrevivência ou a ruína. É indispensável estudá-la profundamente. Sun Tzu","pt-BR", 150,2);
+VALUES(3,"8594318596","9788542805093","Arte da Guerra","10-09-2005	","A guerra é um assunto de importância vital para o Estado; o reino da vida ou da morte; o caminho para a sobrevivência ou a ruína. É indispensável estudá-la profundamente. Sun Tzu","pt-BR", 150,2);
 
 INSERT INTO Livro_autores(Livro_id, autores) VALUES(1,"George Orwell");
 INSERT INTO Livro_autores(Livro_id, autores) VALUES(1,"Ruth Rendell");
 INSERT INTO Livro_autores(Livro_id, autores) VALUES(2,"George Orwell");
 INSERT INTO Livro_autores(Livro_id, autores) VALUES(3,"Sun Tzu");
+
+INSERT INTO pedido(id, codigo_pedido, data_emissao, valor, cliente_id, funcionario_id) 
+VALUES(1,"fe7d285e-3c62-4940-a1c1-411f2b1628c1","2023-08-30",85.5,1,1);
+
+INSERT INTO pedido(id, codigo_pedido, data_emissao, valor, cliente_id, funcionario_id) 
+VALUES(2,"e7d930fa-0e1f-4544-9dde-8229290efd52","2023-08-30",155.45,2,1);
+
+INSERT INTO pedido(id, codigo_pedido, data_emissao, valor, cliente_id, funcionario_id) 
+VALUES(3,"514f3def-2bf2-40a8-bc84-484b6a04d1dd","2023-08-30",255.02,3,2);
+
+INSERT INTO item(id, quantidade, valor_total, valor_unitario, livro_id, pedido_id)
+VALUES(1,1,85.5,85.5,1,1);
+
+INSERT INTO item(id, quantidade, valor_total, valor_unitario, livro_id, pedido_id)
+VALUES(2,1,155.45,155.45,2,2);
+
+INSERT INTO item(id, quantidade, valor_total, valor_unitario, livro_id, pedido_id)
+VALUES(3,1,255.02,255.02,3,3);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
