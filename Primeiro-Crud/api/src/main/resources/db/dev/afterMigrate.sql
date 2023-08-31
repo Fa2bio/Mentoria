@@ -13,7 +13,7 @@ ALTER TABLE livro AUTO_INCREMENT = 1;
 ALTER TABLE Livro_autores AUTO_INCREMENT = 1;
 
 INSERT INTO cliente (id, nome, cpf, endereco_cep,endereco_bairro, endereco_localidade, endereco_logradouro, endereco_complemento)
-VALUES(1,"Fabio", "419.797.000-52","20.090-907","Copacabana","Rio De Janeiro","Av Nossa Senhora de Copacabana","apt 3001");
+VALUES(1,"Fábio", "419.797.000-52","20.090-907","Copacabana","Rio De Janeiro","Av Nossa Senhora de Copacabana","apt 3001");
 
 INSERT INTO cliente(id, nome, cpf, endereco_cep, endereco_bairro, endereco_localidade, endereco_logradouro, endereco_complemento)
 VALUES(2,"Rosangela", "029.339.800-37","20.040-906","Centro","Rio De Janeiro","Avenida Rio Branco","Lado ímpar");
