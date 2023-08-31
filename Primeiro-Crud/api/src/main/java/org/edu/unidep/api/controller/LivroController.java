@@ -14,15 +14,24 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.edu.unidep.api.dto.record.assembler.LivroAssembler;
 import org.edu.unidep.api.dto.record.model.LivroModel;
 import org.edu.unidep.api.dto.record.request.LivroRequest;
 import org.edu.unidep.api.dto.record.response.LivroResponse;
+import org.edu.unidep.api.exceptionhandler.ExceptionMessage;
 import org.edu.unidep.domain.model.Livro;
 import org.edu.unidep.domain.service.LivroService;
 
 @Path("/livros")
+@Tag(name = "Livro")
 public class LivroController {
 
 	@Inject
@@ -35,6 +44,12 @@ public class LivroController {
 	@GET
 	@Path("/listar")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Operation(description = "Listar Todos Os Livros")
+	@APIResponses({
+		@APIResponse(responseCode = "200", description = "Ok"),
+		@APIResponse(responseCode = "204", description = "No Content")
+		
+	})
 	public Response listarTodos() {
 		List<Livro> livros = livroService.listarTodosLivros();
 		if(livros.isEmpty()) return Response.status(Status.NO_CONTENT).build();
@@ -45,7 +60,16 @@ public class LivroController {
 	@GET
 	@Path("/buscar/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarLivro(@PathParam("id") Long id) {
+	@Operation(description = "Busca Um Livro Por Id")
+	@APIResponses({
+		@APIResponse(responseCode = "200", description = "Ok"),
+		@APIResponse(responseCode = "404", description = "Livro Não Encontrado", content =
+			@Content(schema = @Schema(implementation = ExceptionMessage.class))
+		)
+	})
+	public Response buscarLivro(
+			@Parameter(description = "Id do Livro", example = "1", required = true)
+			@PathParam("id") Long id) {
 		Livro livro = livroService.buscarOuFalhar(id);
 		return Response.ok(livroAssembler.toResponse(livro)).build();
 	}
@@ -53,7 +77,16 @@ public class LivroController {
 	@GET
 	@Path("/buscarporisbn/{isbn}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarLivroPorIsbn(@PathParam("isbn") String isbn) {
+	@Operation(description = "Busca Um Livro Por Id")
+	@APIResponses({
+		@APIResponse(responseCode = "200", description = "Ok"),
+		@APIResponse(responseCode = "404", description = "Livro Não Encontrado", content =
+			@Content(schema = @Schema(implementation = ExceptionMessage.class))
+		)
+	})
+	public Response buscarLivroPorIsbn(
+			@Parameter(description = "Isbn do Livro", example = "8535914846", required = true)
+			@PathParam("isbn") String isbn) {
 		Livro livro = livroService.buscarPorIsbn(isbn);
 		return Response.ok(livroAssembler.toResponse(livro)).build();
 	}
@@ -62,9 +95,22 @@ public class LivroController {
 	@PUT	
 	@Path("/atualizar/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
+	@Operation(description = "Atualizar Um Livro Por Id")
+	@APIResponses({
+		@APIResponse(responseCode = "204", description = "Livro Atualizado"),
+		@APIResponse(responseCode = "400", description = "Requisição Não Atendida", content =
+		@Content(schema = @Schema(implementation = ExceptionMessage.class))
+	),
+		@APIResponse(responseCode = "404", description = "Livro Não Encontrado", content =
+			@Content(schema = @Schema(implementation = ExceptionMessage.class))
+		)
+	})
 	public Response atualizarLivro(
+			@Parameter(description = "Id do Livro", example = "1", required = true)
 			@PathParam("id") Long id,
-			@RequestBody LivroRequest livroAtualizado) {
+			
+			@RequestBody(description = "body", required = true)
+			LivroRequest livroAtualizado) {
 		
 		livroService.validarLivroRequest(livroAtualizado);
 		LivroModel livroModel = LivroRequest.toModel(livroAtualizado);
@@ -76,7 +122,16 @@ public class LivroController {
 	@POST
 	@Path("/registrar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registrar(@RequestBody LivroRequest livroRequest) {
+	@Operation(description = "Registra Um Livro")
+	@APIResponses({
+		@APIResponse(responseCode = "201", description = "Livro Registrado"),
+		@APIResponse(responseCode = "400", description = "Requisição Não Atendida", content =
+		@Content(schema = @Schema(implementation = ExceptionMessage.class))
+		)
+	})
+	public Response registrar(
+			@RequestBody(description = "body", required = true)
+			LivroRequest livroRequest) {
 		
 		livroService.validarLivroRequest(livroRequest);
 		LivroModel livroModel = LivroRequest.toModel(livroRequest);
@@ -88,7 +143,16 @@ public class LivroController {
 	@DELETE
 	@Path("/excluir/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response excluir(@PathParam("id") Long id) {
+	@Operation(description = "Busca Um Livro Por Id")
+	@APIResponses({
+		@APIResponse(responseCode = "204", description = "Livro Excluido"),
+		@APIResponse(responseCode = "404", description = "Livro Não Encontrado", content =
+			@Content(schema = @Schema(implementation = ExceptionMessage.class))
+		)
+	})
+	public Response excluir(
+			@Parameter(description = "Id do Livro", example = "1", required = true)
+			@PathParam("id") Long id) {
 		livroService.excluirLivro(id);
 		return Response.status(Status.NO_CONTENT).build();
 	}
