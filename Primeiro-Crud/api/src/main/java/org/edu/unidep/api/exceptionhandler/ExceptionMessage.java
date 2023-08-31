@@ -3,19 +3,28 @@ package org.edu.unidep.api.exceptionhandler;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 public class ExceptionMessage {
 
+	@Schema(description = "Timestamp",example = "2023-08-30T17:23:12.168518997")
 	private LocalDateTime timeStamp;
 	
+	@Schema(description = "Type",example = "ClienteNaoEncontradoException")
 	private String type;
 	
+	@Schema(description = "User Message",example = "Não foi possível encontrar o cliente de id 1")
 	private String userMessage;
 	
+	@Schema(description = "fieldErrors")
 	private Set<FieldError> fieldErrors;
 	
 	public static class FieldError{
 		
+		@Schema(description = "Name Field", example = "cpf")
 		private String nameField;
+		
+		@Schema(description = "fieldErrors", example = "O CPF Informado Deve Ser Válido De Acordo Com As Normas Da Receita Federal Brasileira")
 		private String userMessage;
 		
 		public FieldError(String nameField, String userMessage) {
