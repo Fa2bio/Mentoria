@@ -4,20 +4,25 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ItemRequest {
 
-	@NotNull
+	@NotNull(message = "Quantidade Do Item Não Pode Ser Nulo")
 	@JsonProperty("quantidade")
+	@Schema(description = "Quantidade", example = "3")
 	private Integer quantidade;
 	
-	@NotNull
+	@NotNull(message = "Valor Unitario Do Item Não Pode Ser Nulo")
 	@JsonProperty("valorUnitario")
+	@Schema(description = "Valor Unitario", example = "39.49")
 	private BigDecimal valorUnitario;
 	
-	@NotNull
+	@NotNull(message = "Id Do Livro Não Pode Ser Nulo")
 	@JsonProperty("livroId")
+	@Schema(description = "Id Do Livro", example = "1")
 	private Long livroId;
 	
 	public Integer getQuantidade() {
