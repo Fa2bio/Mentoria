@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.edu.unidep.domain.filter.PedidoFilter;
 import org.edu.unidep.domain.model.Pedido;
 
 public interface PedidoRepository {
@@ -11,6 +12,7 @@ public interface PedidoRepository {
 	List<Pedido> listarPelaData(LocalDate data);
 	List<Pedido> listarPeloNomeCliente(String nomeCliente);
 	List<Pedido> listarPeloNomeFuncionario(String nomeFuncionario);
+	List<Pedido> listarComFiltro(PedidoFilter pedidoFilter);
 	Optional<Pedido> buscarPorId(Long id);
 	Optional<Pedido> buscarPeloCodigoPedido(String codigo);
 	void salvar(Pedido pedido);
