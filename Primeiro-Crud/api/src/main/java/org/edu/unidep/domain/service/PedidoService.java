@@ -14,6 +14,7 @@ import javax.validation.Validator;
 import org.edu.unidep.api.dto.modelmapper.assembler.ItemAssembler;
 import org.edu.unidep.api.dto.modelmapper.request.PedidoRequest;
 import org.edu.unidep.domain.exception.PedidoNaoEncontradoException;
+import org.edu.unidep.domain.filter.PedidoFilter;
 import org.edu.unidep.domain.model.Cliente;
 import org.edu.unidep.domain.model.Funcionario;
 import org.edu.unidep.domain.model.Item;
@@ -58,6 +59,10 @@ public class PedidoService {
 	
 	public List<Pedido> listarPeloNomeFuncionario(String nomeFuncionario){
 		return pedidoRepository.listarPeloNomeFuncionario(nomeFuncionario);
+	}
+	
+	public List<Pedido> listarComFiltro(PedidoFilter pedidoFilter){
+		return pedidoRepository.listarComFiltro(pedidoFilter);
 	}
 	
 	public Pedido buscarOuFalhar(Long id) {
