@@ -25,6 +25,7 @@ import org.edu.unidep.api.dto.modelmapper.assembler.PedidoAssembler;
 import org.edu.unidep.api.dto.modelmapper.request.PedidoRequest;
 import org.edu.unidep.api.dto.modelmapper.response.PedidoResponse;
 import org.edu.unidep.api.exceptionhandler.ExceptionMessage;
+import org.edu.unidep.domain.filter.PedidoFilter;
 import org.edu.unidep.domain.model.Pedido;
 import org.edu.unidep.domain.service.PedidoService;
 
@@ -106,6 +107,16 @@ public class PedidoController {
 			@PathParam("nome") String nome) {
 		
 		List<Pedido> pedidos = pedidoService.listarPeloNomeFuncionario(nome);
+		if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
+		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos);
+		return Response.ok(pedidosResponse).build();
+	}
+	
+	@GET
+	@Path("listarcomfiltro")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarComFiltro(@RequestBody PedidoFilter pedidoFilter) {
+		List<Pedido> pedidos = pedidoService.listarComFiltro(pedidoFilter);
 		if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
 		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos);
 		return Response.ok(pedidosResponse).build();
