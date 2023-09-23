@@ -1,6 +1,9 @@
 package org.edu.unidep.api.dto.modelmapper.response;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.ws.rs.core.Link;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -23,6 +26,13 @@ public class ClienteResponse {
 	
 	@JsonProperty("pedidos")
 	private List<PedidoResumoResponse> pedidos;
+	
+	@JsonProperty("links")
+	private List<Link> links = new ArrayList<>();
+	
+	public void addLink(Link link) {
+		this.links.add(link);
+	}
 	
 	public String getNome() {
 		return nome;
@@ -59,5 +69,11 @@ public class ClienteResponse {
 	}
 	public void setPedidos(List<PedidoResumoResponse> pedidos) {
 		this.pedidos = pedidos;
+	}
+	public List<Link> getLinks() {
+		return links;
+	}
+	public void setLinks(List<Link> links) {
+		this.links = links;
 	}
 }
