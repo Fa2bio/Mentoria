@@ -10,9 +10,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -48,10 +50,10 @@ public class ClienteController {
 		@APIResponse(responseCode = "200", description = "Ok"),
 		@APIResponse(responseCode = "204", description = "No Content")
 	})
-	public Response listarTodos() {
+	public Response listarTodos(@Context UriInfo uriInfo) {
 		List<Cliente> clientes = clienteService.listarTodosClientes();
 		if(clientes.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<ClienteResponse> clienteResponse = clienteAssembler.toCollectionModel(clientes);
+		List<ClienteResponse> clienteResponse = clienteAssembler.toCollectionModel(clientes, uriInfo);
 		return Response.ok(clienteResponse).build();
 	}
 	
@@ -67,9 +69,10 @@ public class ClienteController {
 	})
 	public Response buscarCliente(
 			@Parameter(description = "Id do Cliente", example = "1", required = true)
-			@PathParam("id") Long id) {
+			@PathParam("id") Long id,
+			@Context UriInfo uriInfo) {
 		Cliente cliente = clienteService.buscarOuFalhar(id);
-		ClienteResponse clienteResponse = clienteAssembler.toModel(cliente);
+		ClienteResponse clienteResponse = clienteAssembler.toModel(cliente, uriInfo);
 		return Response.ok(clienteResponse).build();
 	}
 	
