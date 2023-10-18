@@ -10,9 +10,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -50,10 +52,10 @@ public class LivroController {
 		@APIResponse(responseCode = "204", description = "No Content")
 		
 	})
-	public Response listarTodos() {
+	public Response listarTodos(@Context UriInfo uriInfo) {
 		List<Livro> livros = livroService.listarTodosLivros();
 		if(livros.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<LivroResponse> livrosResponse = livroAssembler.toCollectionResponse(livros);
+		List<LivroResponse> livrosResponse = livroAssembler.toCollectionResponse(livros, uriInfo);
 		return Response.ok(livrosResponse).build();
 	}
 	
@@ -69,9 +71,10 @@ public class LivroController {
 	})
 	public Response buscarLivro(
 			@Parameter(description = "Id do Livro", example = "1", required = true)
-			@PathParam("id") Long id) {
+			@PathParam("id") Long id,
+			@Context UriInfo uriInfo) {
 		Livro livro = livroService.buscarOuFalhar(id);
-		return Response.ok(livroAssembler.toResponse(livro)).build();
+		return Response.ok(livroAssembler.toResponse(livro, uriInfo)).build();
 	}
 	
 	@GET
@@ -86,9 +89,10 @@ public class LivroController {
 	})
 	public Response buscarLivroPorIsbn(
 			@Parameter(description = "Isbn do Livro", example = "8535914846", required = true)
-			@PathParam("isbn") String isbn) {
+			@PathParam("isbn") String isbn,
+			@Context UriInfo uriInfo) {
 		Livro livro = livroService.buscarPorIsbn(isbn);
-		return Response.ok(livroAssembler.toResponse(livro)).build();
+		return Response.ok(livroAssembler.toResponse(livro, uriInfo)).build();
 	}
 	
 	// Altera dados de uma instancia presente no servidor
