@@ -7,6 +7,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.edu.unidep.api.controller.ClienteController;
 import org.edu.unidep.api.controller.FuncionarioController;
+import org.edu.unidep.api.controller.LivroController;
 
 @ApplicationScoped
 public class ApiLinks {
@@ -78,6 +79,42 @@ public class ApiLinks {
 	
 	/*-------------------------------------------Links Livros Controller---------------------------------------------------*/
 	
+	public Link linkToLivrosListar(UriInfo uriInfo) {
+		String uri = uriWithMethod(uriInfo, LivroController.class, "listarTodos");
+		Link link = linkBuilder(uri, "_blank", "GET");
+		return link;
+	}
+	
+	public Link linkToLivrosBuscar(UriInfo uriInfo, Long livroId) {
+		String uri = uriWithIdMethod(uriInfo, LivroController.class, "buscarLivro", livroId);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToLivrosBuscarPorIsbn(UriInfo uriInfo, String isbn) {
+		String uri = uriWithIsbnMethod(uriInfo, LivroController.class, "buscarLivroPorIsbn", isbn);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToLivrosAtualizar(UriInfo uriInfo, Long livroId) {
+		String uri = uriWithIdMethod(uriInfo, LivroController.class, "atualizarLivro", livroId);
+		Link link = linkBuilder(uri, "_self", "PUT");
+		return link;
+	}
+	
+	public Link linkToLivrosRegistrar(UriInfo uriInfo) {
+		String uri = uriWithMethod(uriInfo, LivroController.class, "registrar");
+		Link link = linkBuilder(uri, "_blank", "POST");
+		return link;
+	}
+	
+	public Link linkToLivrosExcluir(UriInfo uriInfo, Long livroId) {
+		String uri = uriWithIdMethod(uriInfo, LivroController.class, "excluir", livroId);
+		Link link = linkBuilder(uri, "_self", "DELETE");
+		return link;
+	}
+	
 	private Link linkBuilder(String uri, String rel, String type) {
 		return Link.fromUriBuilder(UriBuilder.fromUri(uri))
 				.rel(rel)
@@ -103,4 +140,14 @@ public class ApiLinks {
 				.toString();
 		return uri;
 	}
+	
+	private String uriWithIsbnMethod(UriInfo uriInfo, Class<?>classs, String method, String isbn) {
+	String uri = uriInfo.getBaseUriBuilder()
+			.path(classs)
+			.path(classs,method)
+			.resolveTemplate("isbn", isbn)
+			.build()
+			.toString();
+	return uri;
+}
 }
