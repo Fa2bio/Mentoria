@@ -29,10 +29,10 @@ public class ClienteAssembler {
 	public ClienteResponse toModel(Cliente cliente, UriInfo uriInfo) {
 		ClienteResponse clienteResponse = modelMapper.map(cliente, ClienteResponse.class);
 		clienteResponse.addLink(apiLinks.linkToClientesListar(uriInfo));
-		clienteResponse.addLink(apiLinks.linkToClientesBuscar(cliente.getId(), uriInfo));
-		clienteResponse.addLink(apiLinks.linkToClientesAtualizar(cliente.getId(), uriInfo));
+		clienteResponse.addLink(apiLinks.linkToClientesBuscar(uriInfo, cliente.getId()));
+		clienteResponse.addLink(apiLinks.linkToClientesAtualizar(uriInfo, cliente.getId()));
 		clienteResponse.addLink(apiLinks.linkToClientesRegistrar(uriInfo));
-		clienteResponse.addLink(apiLinks.linkToClientesExcluir(cliente.getId(), uriInfo));
+		clienteResponse.addLink(apiLinks.linkToClientesExcluir(uriInfo, cliente.getId()));
 		return clienteResponse;
 	}
 	

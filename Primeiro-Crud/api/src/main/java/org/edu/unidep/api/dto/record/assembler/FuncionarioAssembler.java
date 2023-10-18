@@ -39,17 +39,17 @@ public class FuncionarioAssembler {
 		
 		List<Link> links = new ArrayList<>();
 		links.add(apiLinks.linkToFuncionariosListar(uriInfo));
-		links.add(apiLinks.linkToFuncionariosBuscar(funcionario.getId(), uriInfo));
-		links.add(apiLinks.linkToFuncionariosAtualizar(funcionario.getId(), uriInfo));
+		links.add(apiLinks.linkToFuncionariosBuscar(uriInfo, funcionario.getId()));
+		links.add(apiLinks.linkToFuncionariosAtualizar(uriInfo, funcionario.getId()));
 		links.add(apiLinks.linkToFuncionariosRegistrar(uriInfo));
-		links.add(apiLinks.linkToFuncionariosExcluir(funcionario.getId(), uriInfo));
+		links.add(apiLinks.linkToFuncionariosExcluir(uriInfo, funcionario.getId()));
 		
 		return new FuncionarioResponse(
 				funcionario.getNome(),
 				funcionario.getCpf(),
 				enderecoResponse,
 				clienteRecordAssembler.toCollectionResumoResponse(funcionario.getClientes()),
-				pedidoAssembler.toCollectionResumoResponse(funcionario.getPedidos(), uriInfo),
+				pedidoAssembler.toCollectionResumoResponse(funcionario.getPedidos()),
 				links
 				);
 	}

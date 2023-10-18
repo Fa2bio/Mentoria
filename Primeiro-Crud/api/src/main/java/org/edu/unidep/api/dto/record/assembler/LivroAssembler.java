@@ -38,11 +38,11 @@ public class LivroAssembler {
 		
 		List<Link> links = new ArrayList<>();
 		links.add(apiLinks.linkToLivrosListar(uriInfo));
-		links.add(apiLinks.linkToLivrosBuscar(livro.getId(), uriInfo));
-		links.add(apiLinks.linkToLivrosBuscarPorIsbn(livro.getVolumeInfo().getIsbn10(), uriInfo));
-		links.add(apiLinks.linkToLivrosAtualizar(livro.getId(), uriInfo));
+		links.add(apiLinks.linkToLivrosBuscar(uriInfo, livro.getId()));
+		links.add(apiLinks.linkToLivrosBuscarPorIsbn(uriInfo, livro.getVolumeInfo().getIsbn10()));
+		links.add(apiLinks.linkToLivrosAtualizar(uriInfo, livro.getId()));
 		links.add(apiLinks.linkToLivrosRegistrar(uriInfo));
-		links.add(apiLinks.linkToLivrosExcluir(livro.getId(), uriInfo));
+		links.add(apiLinks.linkToLivrosExcluir(uriInfo, livro.getId()));
 		
 		if(livro.getCliente() != null) {
 			return new LivroResponse(				
