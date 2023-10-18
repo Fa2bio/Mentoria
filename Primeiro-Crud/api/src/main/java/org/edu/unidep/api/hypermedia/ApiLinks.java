@@ -6,9 +6,12 @@ import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
 import org.edu.unidep.api.controller.ClienteController;
+import org.edu.unidep.api.controller.FuncionarioController;
 
 @ApplicationScoped
 public class ApiLinks {
+	
+	/*-------------------------------------------Links Cliente Controller-------------------------------------------------------*/
 
 	public Link linkToClientesListar(UriInfo uriInfo) {
 		String uri = uriWithMethod(uriInfo, ClienteController.class, "listarTodos");
@@ -39,6 +42,41 @@ public class ApiLinks {
 		Link link = linkBuilder(uri, "_self", "DELETE");
 		return link;
 	}
+	
+	
+	/*-------------------------------------------Links Funcionario Controller---------------------------------------------------*/
+	
+	public Link linkToFuncionariosListar(UriInfo uriInfo) {
+		String uri = uriWithMethod(uriInfo, FuncionarioController.class, "listarTodos");
+		Link link = linkBuilder(uri, "_blank", "GET");
+		return link;
+	}
+	
+	public Link linkToFuncionariosBuscar(UriInfo uriInfo, Long funcionarioId) {
+		String uri = uriWithIdMethod(uriInfo, FuncionarioController.class, "buscarFuncionario", funcionarioId);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToFuncionariosAtualizar(UriInfo uriInfo, Long funcionarioId) {
+		String uri = uriWithIdMethod(uriInfo, FuncionarioController.class, "atualizarFuncionario", funcionarioId);
+		Link link = linkBuilder(uri, "_self", "PUT");
+		return link;
+	}
+	
+	public Link linkToFuncionariosRegistrar(UriInfo uriInfo) {
+		String uri = uriWithMethod(uriInfo, FuncionarioController.class, "registrar");
+		Link link = linkBuilder(uri, "_blank", "POST");
+		return link;
+	}
+	
+	public Link linkToFuncionariosExcluir(UriInfo uriInfo, Long funcionarioId) {
+		String uri = uriWithIdMethod(uriInfo, FuncionarioController.class, "excluir", funcionarioId);
+		Link link = linkBuilder(uri, "_self", "DELETE");
+		return link;
+	}
+	
+	/*-------------------------------------------Links Livros Controller---------------------------------------------------*/
 	
 	private Link linkBuilder(String uri, String rel, String type) {
 		return Link.fromUriBuilder(UriBuilder.fromUri(uri))
