@@ -49,10 +49,10 @@ public class PedidoController {
 		@APIResponse(responseCode = "200", description = "Ok"),
 		@APIResponse(responseCode = "204", description = "No Content")
 	})
-	public Response listarTodos(@Context UriInfo uriInfo) {
+	public Response listarTodos() {
 		List<Pedido> pedidos = pedidoService.listarTodosPedido();
 		if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos, uriInfo);
+		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos);
 		return Response.ok(pedidosResponse).build();
 	}
 	
@@ -67,13 +67,12 @@ public class PedidoController {
 	})
 	public Response listarPelaData(
 			@Parameter(description = "data", example = "2023-08-30", required = true)
-			@PathParam("data") String data,
-			@Context UriInfo uriInfo) {
+			@PathParam("data") String data) {
 		
 		LocalDate localdata = LocalDate.parse(data);
 		List<Pedido> pedidos = pedidoService.listarPelaData(localdata);
 		if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos, uriInfo);
+		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos);
 		return Response.ok(pedidosResponse).build();
 	}
 	
@@ -88,12 +87,11 @@ public class PedidoController {
 	})
 	public Response listarPeloNomeCliente(
 			@Parameter(description = "nome", example = "Fábio", required = true)
-			@PathParam("nome") String nome, 
-			@Context UriInfo uriInfo) {
+			@PathParam("nome") String nome) {
 		
 		List<Pedido> pedidos = pedidoService.listarPeloNomeCliente(nome);
 		if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos, uriInfo);
+		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos);
 		return Response.ok(pedidosResponse).build();
 	}
 	
@@ -108,12 +106,11 @@ public class PedidoController {
 	})
 	public Response listarPeloNomeFuncionario(
 			@Parameter(description = "nome", example = "Paulo", required = true)
-			@PathParam("nome") String nome,
-			@Context UriInfo uriInfo) {
+			@PathParam("nome") String nome) {
 		
 		List<Pedido> pedidos = pedidoService.listarPeloNomeFuncionario(nome);
 		if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos, uriInfo);
+		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos);
 		return Response.ok(pedidosResponse).build();
 	}
 	
@@ -123,7 +120,7 @@ public class PedidoController {
 	public Response listarComFiltro(@RequestBody PedidoFilter pedidoFilter, @Context UriInfo uriInfo) {
 		List<Pedido> pedidos = pedidoService.listarComFiltro(pedidoFilter);
 		if(pedidos.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos, uriInfo);
+		List<PedidoResponse> pedidosResponse = pedidoAssembler.toCollectionResponse(pedidos);
 		return Response.ok(pedidosResponse).build();
 	}
 	
@@ -138,10 +135,9 @@ public class PedidoController {
 	})
 	public Response buscarPedido(
 			@Parameter(description = "Id Do Pedido", example = "1", required = true)
-			@PathParam("id") Long id,
-			@Context UriInfo uriInfo) {
+			@PathParam("id") Long id) {
 		Pedido pedido = pedidoService.buscarOuFalhar(id);
-		PedidoResponse pedidoResponse = pedidoAssembler.toResponse(pedido, uriInfo);
+		PedidoResponse pedidoResponse = pedidoAssembler.toResponse(pedido);
 		return Response.ok(pedidoResponse).build();
 	}
 	
@@ -156,10 +152,9 @@ public class PedidoController {
 	})
 	public Response buscarPedidoPeloCodigo(
 			@Parameter(description = "Código Do Pedido", example = "fe7d285e-3c62-4940-a1c1-411f2b1628c1", required = true)
-			@PathParam("codigo") String codigo,
-			@Context UriInfo uriInfo) {
+			@PathParam("codigo") String codigo) {
 		Pedido pedido = pedidoService.buscarPeloCodigo(codigo);
-		PedidoResponse pedidoResponse = pedidoAssembler.toResponse(pedido, uriInfo);
+		PedidoResponse pedidoResponse = pedidoAssembler.toResponse(pedido);
 		return Response.ok(pedidoResponse).build();
 	}
 	
