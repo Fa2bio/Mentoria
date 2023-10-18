@@ -10,9 +10,11 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -48,10 +50,10 @@ public class FuncionarioController {
 		@APIResponse(responseCode = "200", description = "Ok"),
 		@APIResponse(responseCode = "204", description = "No Content")
 	})
-	public Response listarTodos() {
+	public Response listarTodos(@Context UriInfo uriInfo) {
 		List<Funcionario> funcionarios = funcionarioService.listarTodosFuncionarios();
 		if(funcionarios.isEmpty()) return Response.status(Status.NO_CONTENT).build();
-		return Response.ok(funcionarioAssembler.toCollectionResponse(funcionarios)).build();
+		return Response.ok(funcionarioAssembler.toCollectionResponse(funcionarios, uriInfo)).build();
 	}
 	
 	@GET
@@ -66,9 +68,10 @@ public class FuncionarioController {
 	})
 	public Response buscarFuncionario(
 			@Parameter(description = "Id do Funcionario", example = "1", required = true)
-			@PathParam("id") Long id) {
+			@PathParam("id") Long id,
+			@Context UriInfo uriInfo) {
 		Funcionario funcionario = funcionarioService.buscarOuFalhar(id);
-		return Response.ok(funcionarioAssembler.toResponse(funcionario)).build();
+		return Response.ok(funcionarioAssembler.toResponse(funcionario, uriInfo)).build();
 	}
 	
 	// Altera dados de uma instancia presente no servidor
