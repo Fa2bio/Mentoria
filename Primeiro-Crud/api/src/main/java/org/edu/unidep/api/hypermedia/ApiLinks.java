@@ -8,6 +8,7 @@ import javax.ws.rs.core.UriInfo;
 import org.edu.unidep.api.controller.ClienteController;
 import org.edu.unidep.api.controller.FuncionarioController;
 import org.edu.unidep.api.controller.LivroController;
+import org.edu.unidep.api.controller.PedidoController;
 
 @ApplicationScoped
 public class ApiLinks {
@@ -113,7 +114,57 @@ public class ApiLinks {
 		Link link = linkBuilder(uri, "_self", "DELETE");
 		return link;
 	}
+	
+	/*-----------------------------------Links Pedido Controller --------------------------------------------*/
 
+	public Link linkToPedidosListar(UriInfo uriInfo) {
+		String uri = uriWithMethod(uriInfo, PedidoController.class, "listarTodos");
+		Link link = linkBuilder(uri, "_blank", "GET");
+		return link;
+	}
+	
+	public Link linkToPedidosListarData(UriInfo uriInfo, String data) {
+		String uri = uriWithDataMethod(uriInfo, PedidoController.class, "listarPelaData", data);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToPedidosListarNomeCliente(UriInfo uriInfo, String nome) {
+		String uri = uriWithNomeMethod(uriInfo, PedidoController.class, "listarPeloNomeCliente", nome);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToPedidosListarNomeFuncionario(UriInfo uriInfo, String nome) {
+		String uri = uriWithNomeMethod(uriInfo, PedidoController.class, "listarPeloNomeFuncionario", nome);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToPedidosListarComFiltro(UriInfo uriInfo) {
+		String uri = uriWithMethod(uriInfo, PedidoController.class, "listarComFiltro");
+		Link link = linkBuilder(uri, "_blank", "GET");
+		return link;
+	}
+	
+	public Link linkToPedidosBuscar(UriInfo uriInfo, Long id) {
+		String uri = uriWithIdMethod(uriInfo, PedidoController.class, "buscarPedido", id);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToPedidosBuscarPeloCodigo(UriInfo uriInfo, String codigo) {
+		String uri = uriWithCodigoMethod(uriInfo, PedidoController.class, "buscarPedidoPeloCodigo", codigo);
+		Link link = linkBuilder(uri, "_self", "GET");
+		return link;
+	}
+	
+	public Link linkToPedidosRegistrar(UriInfo uriInfo) {
+		String uri = uriWithMethod(uriInfo, PedidoController.class, "registrar");
+		Link link = linkBuilder(uri, "_blank", "POST");
+		return link;
+	}
+	
 	private Link linkBuilder(String uri, String rel, String type) {
 		return Link.fromUriBuilder(
 				UriBuilder.fromUri(uri))
@@ -150,5 +201,37 @@ public class ApiLinks {
 				.toString();
 		return uri;
 	}
+
+	private String uriWithDataMethod(UriInfo uriInfo, Class<?> classs, String method, String data) {
+		String uri = uriInfo.getBaseUriBuilder()
+				.path(classs)
+				.path(classs, method)
+				.resolveTemplate("data", data)
+				.build()
+				.toString();
+		return uri;
+	}
+	
+	private String uriWithNomeMethod(UriInfo uriInfo, Class<?> classs, String method, String nome) {
+		String uri = uriInfo.getBaseUriBuilder()
+				.path(classs)
+				.path(classs, method)
+				.resolveTemplate("nome", nome)
+				.build()
+				.toString();
+		return uri;
+	}
+	
+	private String uriWithCodigoMethod(UriInfo uriInfo, Class<?> classs, String method, String codigo) {
+		String uri = uriInfo.getBaseUriBuilder()
+				.path(classs)
+				.path(classs, method)
+				.resolveTemplate("codigo", codigo)
+				.build()
+				.toString();
+		return uri;
+	}
+
+
 
 }
