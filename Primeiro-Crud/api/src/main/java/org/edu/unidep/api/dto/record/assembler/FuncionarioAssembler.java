@@ -49,7 +49,7 @@ public class FuncionarioAssembler {
 				funcionario.getCpf(),
 				enderecoResponse,
 				clienteRecordAssembler.toCollectionResumoResponse(funcionario.getClientes()),
-				pedidoAssembler.toCollectionResumoResponse(funcionario.getPedidos()),
+				pedidoAssembler.toCollectionResumoResponse(funcionario.getPedidos(), uriInfo),
 				links
 				);
 	}
